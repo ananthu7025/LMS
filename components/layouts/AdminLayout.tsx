@@ -59,7 +59,6 @@ export default function AdminLayout({
                 )}
               </div>
 
-              {/* Right: notification + user */}
               <ul className="navbar-nav flex-row align-items-center ms-md-auto">
                 {/* Notifications */}
                 <li className="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-2">
