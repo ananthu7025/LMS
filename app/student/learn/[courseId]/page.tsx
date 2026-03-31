@@ -47,22 +47,12 @@ const curriculum = [
   },
 ]
 
-const typeIcon = (type: string) => {
-  const icons: Record<string, { bg: string; color: string; path: string }> = {
-    video: { bg: 'bg-[#7367F0]/10', color: 'text-[#7367F0]', path: 'M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664zM21 12a9 9 0 11-18 0 9 9 0 0118 0z' },
-    pdf: { bg: 'bg-[#EA5455]/10', color: 'text-[#EA5455]', path: 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z' },
-    quiz: { bg: 'bg-[#FF9F43]/10', color: 'text-[#FF9F43]', path: 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4' },
-    live: { bg: 'bg-[#28C76F]/10', color: 'text-[#28C76F]', path: 'M15 10l4.553-2.069A1 1 0 0121 8.882v6.236a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z' },
-    assignment: { bg: 'bg-[#00CFE8]/10', color: 'text-[#00CFE8]', path: 'M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z' },
-  }
-  const ic = icons[type] || icons.video
-  return (
-    <div className={`w-6 h-6 rounded-md ${ic.bg} flex items-center justify-center flex-shrink-0`}>
-      <svg xmlns="http://www.w3.org/2000/svg" className={`w-3.5 h-3.5 ${ic.color}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={ic.path} />
-      </svg>
-    </div>
-  )
+const typeIconMap: Record<string, { icon: string; color: string }> = {
+  video: { icon: 'ti tabler-player-play', color: 'primary' },
+  pdf: { icon: 'ti tabler-file-text', color: 'danger' },
+  quiz: { icon: 'ti tabler-clipboard-check', color: 'warning' },
+  live: { icon: 'ti tabler-video', color: 'success' },
+  assignment: { icon: 'ti tabler-edit', color: 'info' },
 }
 
 export default function CourseHomePage() {
@@ -72,54 +62,54 @@ export default function CourseHomePage() {
 
   return (
     <StudentLayout activePath="/student/learn">
-      <div className="max-w-5xl mx-auto">
+      <div className="mx-auto" style={{ maxWidth: 960 }}>
         {/* Course header */}
-        <div className="bg-white rounded-xl border border-[#DBDADE] shadow-sm p-6 mb-6">
-          <div className="flex flex-col md:flex-row md:items-center gap-4">
-            <div className="flex-1">
-              <span className="inline-block text-xs font-semibold px-2.5 py-0.5 rounded-full bg-[#7367F0]/10 text-[#7367F0] mb-2">Criminal Law</span>
-              <h1 className="text-xl font-bold text-[#4B465C] mb-1">Criminal Law & Procedure (IPC, CrPC & Evidence Act)</h1>
-              <p className="text-sm text-[#A8AAAE]">By Adv. Ravi Shankar · Last accessed today</p>
+        <div className="card shadow-sm mb-4">
+          <div className="card-body p-4">
+            <div className="d-flex flex-column flex-md-row align-items-md-center gap-3">
+              <div className="flex-grow-1">
+                <span className="badge bg-label-primary small mb-2">Criminal Law</span>
+                <h5 className="fw-bold text-heading mb-1">Criminal Law &amp; Procedure (IPC, CrPC &amp; Evidence Act)</h5>
+                <p className="small text-body-secondary mb-0">By Adv. Ravi Shankar · Last accessed today</p>
+              </div>
+              <a
+                href="/student/learn/1/lesson/5"
+                className="btn btn-primary d-flex align-items-center gap-2 px-4 flex-shrink-0"
+              >
+                <i className="ti tabler-player-play"></i>
+                Continue Learning
+              </a>
             </div>
-            <a
-              href="/student/learn/1/lesson/5"
-              className="flex items-center gap-2 px-5 py-2.5 bg-[#7367F0] hover:bg-[#5E50E2] text-white font-semibold rounded-lg transition shadow-sm text-sm whitespace-nowrap"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
-              </svg>
-              Continue Learning
-            </a>
-          </div>
 
-          {/* Progress */}
-          <div className="mt-5 pt-4 border-t border-[#DBDADE]">
-            <div className="flex items-center justify-between text-sm mb-2">
-              <span className="text-[#4B465C] font-medium">Overall Progress</span>
-              <span className="text-[#7367F0] font-bold">{progress}%</span>
-            </div>
-            <div className="h-2.5 bg-[#F8F7FA] rounded-full overflow-hidden">
-              <div className="h-full bg-[#7367F0] rounded-full transition-all" style={{ width: `${progress}%` }} />
-            </div>
-            <div className="flex items-center gap-4 mt-2 text-xs text-[#A8AAAE]">
-              <span>{completedLessons} / {totalLessons} lessons completed</span>
-              <span>·</span>
-              <span>Est. 5h 30m remaining</span>
-              <span>·</span>
-              <span className="text-[#28C76F] font-medium">On track</span>
+            {/* Progress */}
+            <div className="mt-4 pt-4 border-top">
+              <div className="d-flex align-items-center justify-content-between small mb-2">
+                <span className="text-heading fw-medium">Overall Progress</span>
+                <span className="text-primary fw-bold">{progress}%</span>
+              </div>
+              <div className="progress rounded-pill" style={{ height: 8 }}>
+                <div className="progress-bar bg-primary" role="progressbar" style={{ width: `${progress}%` }} aria-valuenow={progress} aria-valuemin={0} aria-valuemax={100}></div>
+              </div>
+              <div className="d-flex align-items-center gap-3 mt-2 extra-small text-body-secondary">
+                <span>{completedLessons} / {totalLessons} lessons completed</span>
+                <span>·</span>
+                <span>Est. 5h 30m remaining</span>
+                <span>·</span>
+                <span className="text-success fw-medium">On track</span>
+              </div>
             </div>
           </div>
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-1 bg-white rounded-lg border border-[#DBDADE] shadow-sm p-1 mb-6 w-fit">
+        <div className="d-inline-flex gap-1 bg-white rounded border shadow-sm p-1 mb-4">
           {['Curriculum', 'Resources', 'Announcements'].map((tab, i) => (
             <button
               key={tab}
-              className={`px-4 py-1.5 text-sm font-medium rounded-md transition ${
+              className={`btn btn-sm px-3 py-1 small fw-medium ${
                 i === 0
-                  ? 'bg-[#7367F0] text-white shadow-sm'
-                  : 'text-[#A8AAAE] hover:text-[#4B465C]'
+                  ? 'btn-primary shadow-sm'
+                  : 'btn-text-secondary'
               }`}
             >
               {tab}
@@ -128,64 +118,62 @@ export default function CourseHomePage() {
         </div>
 
         {/* Curriculum tree */}
-        <div className="space-y-3">
+        <div className="d-flex flex-column gap-3">
           {curriculum.map((section, si) => (
-            <div key={si} className="bg-white rounded-xl border border-[#DBDADE] shadow-sm overflow-hidden">
+            <div key={si} className="card shadow-sm overflow-hidden">
               {/* Section header */}
-              <div className="flex items-center justify-between px-5 py-4 bg-[#F8F7FA] cursor-pointer hover:bg-[#F0EFFD] transition">
-                <div className="flex items-center gap-3">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className={`w-4 h-4 text-[#A8AAAE] transition-transform ${section.expanded ? 'rotate-180' : ''}`}
-                    fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
+              <div className="card-header bg-label-secondary d-flex align-items-center justify-content-between py-3 px-4 cursor-pointer">
+                <div className="d-flex align-items-center gap-3">
+                  <i className={`ti tabler-chevron-down small text-body-secondary ${!section.expanded ? 'rotate-n90' : ''}`}></i>
                   <div>
-                    <p className="font-semibold text-sm text-[#4B465C]">{section.title}</p>
-                    <div className="flex items-center gap-3 mt-0.5">
-                      <span className="text-xs text-[#A8AAAE]">{section.lessons} lessons · {section.duration}</span>
-                      <span className="text-xs text-[#28C76F] font-medium">{section.completed}/{section.lessons} done</span>
+                    <p className="fw-bold small text-heading mb-0">{section.title}</p>
+                    <div className="d-flex align-items-center gap-3 mt-1">
+                      <span className="extra-small text-body-secondary">{section.lessons} lessons · {section.duration}</span>
+                      <span className="extra-small text-success fw-medium">{section.completed}/{section.lessons} done</span>
                     </div>
                   </div>
                 </div>
                 {/* Section progress mini */}
-                <div className="hidden sm:flex items-center gap-2">
-                  <div className="w-24 h-1.5 bg-[#DBDADE] rounded-full overflow-hidden">
+                <div className="d-none d-sm-flex align-items-center gap-2">
+                  <div className="progress rounded-pill" style={{ width: 96, height: 4 }}>
                     <div
-                      className="h-full bg-[#28C76F] rounded-full"
+                      className="progress-bar bg-success"
+                      role="progressbar"
                       style={{ width: `${(section.completed / section.lessons) * 100}%` }}
-                    />
+                    ></div>
                   </div>
-                  <span className="text-xs text-[#A8AAAE]">{Math.round((section.completed / section.lessons) * 100)}%</span>
+                  <span className="extra-small text-body-secondary">{Math.round((section.completed / section.lessons) * 100)}%</span>
                 </div>
               </div>
 
               {/* Lessons */}
               {section.expanded && (
-                <div className="divide-y divide-[#DBDADE]">
-                  {section.items.map((item, ii) => (
-                    <a
-                      key={ii}
-                      href={`/student/learn/1/${item.type === 'video' ? 'lesson' : item.type}/${ii + 1}`}
-                      className="flex items-center gap-3 px-5 py-3 hover:bg-[#F8F7FA] transition group"
-                    >
-                      {typeIcon(item.type)}
-                      <span className={`flex-1 text-sm ${item.done ? 'text-[#A8AAAE] line-through' : 'text-[#4B465C] group-hover:text-[#7367F0]'}`}>
-                        {item.title}
-                      </span>
-                      <span className="text-xs text-[#A8AAAE]">{item.dur}</span>
-                      {item.done ? (
-                        <div className="w-5 h-5 rounded-full bg-[#28C76F]/10 flex items-center justify-center">
-                          <svg xmlns="http://www.w3.org/2000/svg" className="w-3 h-3 text-[#28C76F]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-                          </svg>
+                <div className="card-body p-0">
+                  {section.items.map((item, ii) => {
+                    const iconInfo = typeIconMap[item.type] || typeIconMap.video
+                    return (
+                      <a
+                        key={ii}
+                        href={`/student/learn/1/${item.type === 'video' ? 'lesson' : item.type}/${ii + 1}`}
+                        className="d-flex align-items-center gap-3 px-4 py-3 border-bottom text-decoration-none"
+                      >
+                        <div className={`avatar avatar-xs rounded bg-label-${iconInfo.color} d-flex align-items-center justify-content-center flex-shrink-0`}>
+                          <i className={`${iconInfo.icon} extra-small`}></i>
                         </div>
-                      ) : (
-                        <div className="w-5 h-5 rounded-full border-2 border-[#DBDADE]" />
-                      )}
-                    </a>
-                  ))}
+                        <span className={`flex-grow-1 small ${item.done ? 'text-body-secondary text-decoration-line-through' : 'text-heading'}`}>
+                          {item.title}
+                        </span>
+                        <span className="extra-small text-body-secondary">{item.dur}</span>
+                        {item.done ? (
+                          <div className="avatar avatar-xs rounded-circle bg-label-success d-flex align-items-center justify-content-center">
+                            <i className="ti tabler-check extra-small text-success"></i>
+                          </div>
+                        ) : (
+                          <div className="rounded-circle border border-2" style={{ width: 20, height: 20 }}></div>
+                        )}
+                      </a>
+                    )
+                  })}
                 </div>
               )}
             </div>

@@ -1,42 +1,61 @@
 'use client';
+import { usePathname } from 'next/navigation';
+import { useMenu } from '@/hooks/useMenu';
 
 const navItems = [
-  { href: '/tutor/dashboard', icon: '📊', label: 'Dashboard' },
-  { href: '/tutor/courses/1', icon: '📚', label: 'My Courses' },
-  { href: '/tutor/content/upload-video', icon: '⬆️', label: 'Upload Content' },
-  { href: '/tutor/live-classes/schedule', icon: '📹', label: 'Live Classes' },
-  { href: '/tutor/doubts', icon: '❓', label: 'Student Doubts' },
-  { href: '/tutor/assignments', icon: '📝', label: 'Assignments' },
-  { href: '/tutor/students', icon: '📈', label: 'Student Progress' },
+  { href: '/tutor/dashboard',             icon: 'tabler-smart-home',   label: 'Dashboard' },
+  { href: '/tutor/courses/1',             icon: 'tabler-book',         label: 'My Courses' },
+  { href: '/tutor/content/upload-video',  icon: 'tabler-upload',       label: 'Upload Content' },
+  { href: '/tutor/live-classes/schedule', icon: 'tabler-video',        label: 'Live Classes' },
+  { href: '/tutor/doubts',                icon: 'tabler-help-circle',  label: 'Student Doubts' },
+  { href: '/tutor/assignments',           icon: 'tabler-notes',        label: 'Assignments' },
+  { href: '/tutor/students',              icon: 'tabler-chart-bar',    label: 'Student Progress' },
 ];
 
-export default function TutorSidebar({ active }: { active?: string }) {
+export default function TutorSidebar() {
+  const pathname = usePathname();
+  const { toggleMenu } = useMenu();
+
   return (
-    <div style={{ width: 260, minHeight: '100vh', background: 'var(--sidebar-bg)', display: 'flex', flexDirection: 'column', padding: '20px 16px', position: 'fixed', top: 0, left: 0, zIndex: 100 }}>
-      <div style={{ padding: '4px 6px 24px', borderBottom: '1px solid rgba(255,255,255,0.08)', marginBottom: 16 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
-          <span style={{ fontSize: 22 }}>⚖️</span>
-          <span style={{ fontSize: 17, fontWeight: 800, color: '#fff' }}>LexEd</span>
-        </div>
-        <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)', fontWeight: 600, letterSpacing: 0.5, marginBottom: 6 }}>TUTOR PORTAL</div>
-        <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.6)' }}>Sharma Law Academy</div>
+    <aside id="layout-menu" className="layout-menu menu-vertical menu">
+      <div className="app-brand demo">
+        <a href="/tutor/dashboard" className="app-brand-link">
+          <span className="app-brand-logo demo">
+            <span className="text-primary">
+              <svg width="32" height="22" viewBox="0 0 32 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fillRule="evenodd" clipRule="evenodd" d="M0.00172773 0V6.85398C0.00172773 6.85398 -0.133178 9.01207 1.98092 10.8388L13.6912 21.9964L19.7809 21.9181L18.8042 9.88248L16.4951 7.17289L9.23799 0H0.00172773Z" fill="currentColor" />
+                <path opacity="0.06" fillRule="evenodd" clipRule="evenodd" d="M7.69824 16.4364L12.5199 3.23696L16.5541 7.25596L7.69824 16.4364Z" fill="#161616" />
+                <path opacity="0.06" fillRule="evenodd" clipRule="evenodd" d="M8.07751 15.9175L13.9419 4.63989L16.5849 7.28475L8.07751 15.9175Z" fill="#161616" />
+                <path fillRule="evenodd" clipRule="evenodd" d="M7.77295 16.3566L23.6563 0H32V6.88383C32 6.88383 31.8262 9.17836 30.6591 10.4057L19.7824 22H13.6938L7.77295 16.3566Z" fill="currentColor" />
+              </svg>
+            </span>
+          </span>
+          <span className="app-brand-text demo menu-text fw-bold ms-3">LexEd</span>
+        </a>
+        <a href="#" onClick={(e) => { e.preventDefault(); toggleMenu(); }} className="layout-menu-toggle menu-link text-large ms-auto">
+          <i className="icon-base ti tabler-x d-block d-xl-none"></i>
+          <i className="icon-base ti menu-toggle-icon d-none d-xl-block"></i>
+        </a>
       </div>
-      <nav style={{ flex: 1 }}>
-        {navItems.map(item => (
-          <a key={item.href} href={item.href} className={`sidebar-link${active === item.href ? ' active' : ''}`}>
-            <span style={{ fontSize: 16 }}>{item.icon}</span>
-            <span>{item.label}</span>
-          </a>
-        ))}
-      </nav>
-      <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: 16, display: 'flex', alignItems: 'center', gap: 10 }}>
-        <div style={{ width: 36, height: 36, borderRadius: '50%', background: '#00CFE8', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 700, fontSize: 13 }}>AK</div>
-        <div>
-          <div style={{ color: '#fff', fontSize: 13, fontWeight: 600 }}>Anil Kumar</div>
-          <div style={{ color: 'var(--sidebar-text)', fontSize: 11 }}>Criminal Law Tutor</div>
-        </div>
-        <a href="/tutor/login" style={{ marginLeft: 'auto', color: 'rgba(255,255,255,0.4)', fontSize: 16 }} title="Logout">🚪</a>
-      </div>
-    </div>
+
+      <div className="menu-inner-shadow"></div>
+
+      <ul className="menu-inner py-1">
+        <li className="menu-header small">
+          <span className="menu-header-text">Tutor Portal</span>
+        </li>
+        {navItems.map(item => {
+          const isActive = pathname === item.href || pathname.startsWith(item.href + '/');
+          return (
+            <li key={item.href} className={`menu-item${isActive ? ' active' : ''}`}>
+              <a href={item.href} className="menu-link">
+                <i className={`menu-icon icon-base ti ${item.icon}`}></i>
+                <div>{item.label}</div>
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </aside>
   );
 }

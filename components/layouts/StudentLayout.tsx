@@ -1,20 +1,27 @@
-'use client'
-
-import StudentNavbar from './StudentNavbar'
+'use client';
+import StudentNavbar from './StudentNavbar';
+import StudentMenu from './StudentMenu';
 
 export default function StudentLayout({
   children,
   activePath = '',
 }: {
-  children: React.ReactNode
-  activePath?: string
+  children: React.ReactNode;
+  activePath?: string;
 }) {
   return (
-    <div className="min-h-screen bg-[#F8F7FA]">
-      <StudentNavbar activePath={activePath} />
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        {children}
-      </main>
+    <div className="layout-wrapper layout-navbar-full layout-horizontal layout-without-menu">
+      <div className="layout-container">
+        <StudentNavbar />
+        <div className="layout-page">
+          <div className="content-wrapper">
+            <StudentMenu activePath={activePath} />
+            <div className="container-xxl flex-grow-1 container-p-y">
+              {children}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  )
+  );
 }

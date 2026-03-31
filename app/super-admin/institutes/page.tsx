@@ -12,84 +12,115 @@ const institutes = [
   { name: 'CLAT Prep Studio', owner: 'Meera Iyer', plan: 'Starter', students: 56, revenue: '₹4,800', date: 'Jul 3, 2024', status: 'Trial' },
 ];
 
-const statusStyle: Record<string, string> = {
-  Active: 'badge-success', Trial: 'badge-info', Pending: 'badge-warning', Suspended: 'badge-error'
+const statusBadge: Record<string, string> = {
+  Active: 'bg-label-success', Trial: 'bg-label-info', Pending: 'bg-label-warning', Suspended: 'bg-label-danger'
 };
-const planStyle: Record<string, string> = {
-  Starter: 'badge-secondary', Growth: 'badge-info', Pro: 'badge-primary'
+const planBadge: Record<string, string> = {
+  Starter: 'bg-label-secondary', Growth: 'bg-label-info', Pro: 'bg-label-primary'
 };
 
 export default function InstitutesListPage() {
   return (
     <SuperAdminLayout active="/super-admin/institutes" title="Institutes" breadcrumb="Home / Institutes">
       {/* Top bar */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20 }}>
-        <div style={{ display: 'flex', gap: 12, alignItems: 'center', flex: 1 }}>
-          <input className="form-input" style={{ maxWidth: 260 }} placeholder="🔍  Search by name or email…" />
-          <select className="form-input" style={{ maxWidth: 150 }}><option>All Plans</option><option>Starter</option><option>Growth</option><option>Pro</option></select>
-          <select className="form-input" style={{ maxWidth: 150 }}><option>All Status</option><option>Active</option><option>Trial</option><option>Suspended</option><option>Pending</option></select>
-          <select className="form-input" style={{ maxWidth: 150 }}><option>All Regions</option><option>Delhi</option><option>Mumbai</option><option>Bangalore</option></select>
+      <div className="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
+        <div className="d-flex flex-wrap gap-2 flex-grow-1">
+          <div className="position-relative" style={{ maxWidth: 260 }}>
+            <span className="position-absolute top-50 start-0 translate-middle-y ps-3">
+              <i className="ti tabler-search text-body-secondary"></i>
+            </span>
+            <input className="form-control ps-5" placeholder="Search by name or email…" />
+          </div>
+          <select className="form-select w-auto"><option>All Plans</option><option>Starter</option><option>Growth</option><option>Pro</option></select>
+          <select className="form-select w-auto"><option>All Status</option><option>Active</option><option>Trial</option><option>Suspended</option><option>Pending</option></select>
+          <select className="form-select w-auto"><option>All Regions</option><option>Delhi</option><option>Mumbai</option><option>Bangalore</option></select>
         </div>
-        <div style={{ display: 'flex', gap: 10 }}>
-          <button className="btn-outline" style={{ display: 'flex', alignItems: 'center', gap: 6 }}>📥 Export CSV</button>
-          <a href="/super-admin/institutes/approve"><button className="btn-primary" style={{ display: 'flex', alignItems: 'center', gap: 6 }}>✅ Approve Pending (7)</button></a>
+        <div className="d-flex gap-2">
+          <button className="btn btn-outline-secondary">
+            <i className="ti tabler-download me-1"></i>Export CSV
+          </button>
+          <a href="/super-admin/institutes/approve" className="btn btn-primary">
+            <i className="ti tabler-check me-1"></i>Approve Pending (7)
+          </a>
         </div>
       </div>
 
       {/* Table */}
-      <div className="card" style={{ overflow: 'hidden' }}>
-        <table>
-          <thead>
-            <tr>
-              <th><input type="checkbox" /></th>
-              <th>Institute</th>
-              <th>Plan</th>
-              <th>Students</th>
-              <th>Revenue (Mo.)</th>
-              <th>Signup Date</th>
-              <th>Status</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {institutes.map(inst => (
-              <tr key={inst.name}>
-                <td><input type="checkbox" /></td>
-                <td>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                    <div style={{ width: 36, height: 36, borderRadius: 8, background: 'var(--primary-light)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, fontWeight: 700, color: 'var(--primary)', flexShrink: 0 }}>
-                      {inst.name[0]}
-                    </div>
-                    <div>
-                      <div style={{ fontWeight: 600, fontSize: 13.5 }}>{inst.name}</div>
-                      <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>{inst.owner}</div>
-                    </div>
-                  </div>
-                </td>
-                <td><span className={`badge ${planStyle[inst.plan]}`}>{inst.plan}</span></td>
-                <td style={{ fontWeight: 600 }}>{inst.students.toLocaleString()}</td>
-                <td style={{ fontWeight: 600 }}>{inst.revenue}</td>
-                <td style={{ color: 'var(--text-muted)' }}>{inst.date}</td>
-                <td><span className={`badge ${statusStyle[inst.status]}`}>{inst.status}</span></td>
-                <td>
-                  <div style={{ display: 'flex', gap: 6 }}>
-                    <a href={`/super-admin/institutes/1`}><button className="btn-outline" style={{ padding: '5px 12px', fontSize: 12 }}>View</button></a>
-                    {inst.status === 'Active' && <button style={{ background: '#fff5e6', border: 'none', color: 'var(--warning)', borderRadius: 6, padding: '5px 10px', fontSize: 12, cursor: 'pointer', fontWeight: 600 }}>Suspend</button>}
-                    {inst.status === 'Suspended' && <button style={{ background: '#e8faf0', border: 'none', color: 'var(--success)', borderRadius: 6, padding: '5px 10px', fontSize: 12, cursor: 'pointer', fontWeight: 600 }}>Reactivate</button>}
-                  </div>
-                </td>
+      <div className="card">
+        <div className="table-responsive text-nowrap">
+          <table className="table table-hover">
+            <thead>
+              <tr>
+                <th><input type="checkbox" className="form-check-input" /></th>
+                <th>Institute</th>
+                <th>Plan</th>
+                <th>Students</th>
+                <th>Revenue (Mo.)</th>
+                <th>Signup Date</th>
+                <th>Status</th>
+                <th>Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="table-border-bottom-0">
+              {institutes.map(inst => (
+                <tr key={inst.name}>
+                  <td><input type="checkbox" className="form-check-input" /></td>
+                  <td>
+                    <div className="d-flex align-items-center gap-3">
+                      <div className="avatar avatar-sm bg-label-primary rounded">
+                        <span className="avatar-initial rounded fw-bold">{inst.name[0]}</span>
+                      </div>
+                      <div>
+                        <div className="fw-semibold text-heading">{inst.name}</div>
+                        <small className="text-body-secondary">{inst.owner}</small>
+                      </div>
+                    </div>
+                  </td>
+                  <td><span className={`badge ${planBadge[inst.plan]}`}>{inst.plan}</span></td>
+                  <td className="fw-semibold">{inst.students.toLocaleString()}</td>
+                  <td className="fw-semibold">{inst.revenue}</td>
+                  <td className="text-body-secondary">{inst.date}</td>
+                  <td><span className={`badge ${statusBadge[inst.status]}`}>{inst.status}</span></td>
+                  <td>
+                    <div className="d-flex gap-1">
+                      <a href={`/super-admin/institutes/1`} className="btn btn-sm btn-icon btn-text-secondary rounded-pill">
+                        <i className="ti tabler-eye"></i>
+                      </a>
+                      <div className="dropdown">
+                        <button className="btn btn-sm btn-icon btn-text-secondary rounded-pill dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
+                          <i className="ti tabler-dots-vertical"></i>
+                        </button>
+                        <div className="dropdown-menu dropdown-menu-end">
+                          <a className="dropdown-item" href="javascript:void(0);">Edit Details</a>
+                          <a className="dropdown-item" href="javascript:void(0);">Manage Subscription</a>
+                          <div className="dropdown-divider"></div>
+                          {inst.status === 'Active' ? (
+                            <a className="dropdown-item text-warning" href="javascript:void(0);">Suspend Institute</a>
+                          ) : (
+                            <a className="dropdown-item text-success" href="javascript:void(0);">Reactivate Institute</a>
+                          )}
+                          <a className="dropdown-item text-danger" href="javascript:void(0);">Delete</a>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
         {/* Pagination */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 20px', borderTop: '1px solid var(--border)' }}>
-          <div style={{ fontSize: 13, color: 'var(--text-muted)' }}>Showing 1–8 of 248 institutes</div>
-          <div style={{ display: 'flex', gap: 6 }}>
-            {['‹', '1', '2', '3', '...', '31', '›'].map((p, i) => (
-              <button key={i} style={{ width: 32, height: 32, borderRadius: 6, border: '1px solid var(--border)', background: p === '1' ? 'var(--primary)' : '#fff', color: p === '1' ? '#fff' : 'var(--text-primary)', cursor: 'pointer', fontSize: 13, fontWeight: 500 }}>{p}</button>
-            ))}
-          </div>
+        <div className="card-footer d-flex flex-wrap align-items-center justify-content-between gap-3">
+          <small className="text-body-secondary">Showing 1–8 of 248 institutes</small>
+          <nav>
+            <ul className="pagination pagination-sm mb-0">
+              {['‹', '1', '2', '3', '...', '31', '›'].map((p, i) => (
+                <li key={i} className={`page-item${p === '1' ? ' active' : ''}`}>
+                  <a className="page-link" href="javascript:void(0);">{p}</a>
+                </li>
+              ))}
+            </ul>
+          </nav>
         </div>
       </div>
     </SuperAdminLayout>

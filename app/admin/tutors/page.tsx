@@ -2,52 +2,62 @@
 import AdminLayout from '@/components/layouts/AdminLayout';
 
 const tutors = [
-  { name: 'Anil Kumar', email: 'anil@sharmalaw.in', spec: 'Criminal Law', courses: 3, students: 466, status: 'Active' },
-  { name: 'Priya Nair', email: 'priya@sharmalaw.in', spec: 'Constitutional Law', courses: 2, students: 340, status: 'Active' },
-  { name: 'Meera Sharma', email: 'meera@gmail.com', spec: 'Family Law', courses: 1, students: 0, status: 'Invited' },
-  { name: 'Rajiv Bose', email: 'rajiv@gmail.com', spec: 'Evidence Law', courses: 1, students: 124, status: 'Active' },
-  { name: 'Kiran Patel', email: 'kiran@gmail.com', spec: 'Contract Law', courses: 0, students: 0, status: 'Inactive' },
+  { name: 'Anil Kumar',    email: 'anil@sharmalaw.in',  spec: 'Criminal Law',      courses: 3, students: 466, status: 'Active' },
+  { name: 'Priya Nair',    email: 'priya@sharmalaw.in', spec: 'Constitutional Law', courses: 2, students: 340, status: 'Active' },
+  { name: 'Meera Sharma',  email: 'meera@gmail.com',    spec: 'Family Law',         courses: 1, students: 0,   status: 'Invited' },
+  { name: 'Rajiv Bose',    email: 'rajiv@gmail.com',    spec: 'Evidence Law',       courses: 1, students: 124, status: 'Active' },
+  { name: 'Kiran Patel',   email: 'kiran@gmail.com',    spec: 'Contract Law',       courses: 0, students: 0,   status: 'Inactive' },
 ];
 
-const statusStyle: Record<string, string> = { Active: 'badge-success', Invited: 'badge-warning', Inactive: 'badge-secondary' };
+const statusBadge: Record<string, string> = { Active: 'bg-label-success', Invited: 'bg-label-warning', Inactive: 'bg-label-secondary' };
 
 export default function TutorsPage() {
   return (
-    <AdminLayout active="/admin/tutors" title="Tutors" breadcrumb="Home / Tutors">
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 20 }}>
-        <input className="form-input" style={{ maxWidth: 280 }} placeholder="🔍 Search tutors..." />
-        <a href="/admin/tutors/invite"><button className="btn-primary">＋ Invite Tutor</button></a>
+    <AdminLayout title="Tutors" breadcrumb="Home / Tutors">
+      <div className="d-flex justify-content-between align-items-center mb-4">
+        <input className="form-control" style={{ maxWidth: 280 }} placeholder="Search tutors..." />
+        <a href="/admin/tutors/invite" className="btn btn-primary">
+          <i className="ti tabler-plus me-1"></i>Invite Tutor
+        </a>
       </div>
-      <div className="card" style={{ overflow: 'hidden' }}>
-        <table>
-          <thead><tr><th>Tutor</th><th>Specialization</th><th>Courses</th><th>Students</th><th>Status</th><th>Actions</th></tr></thead>
-          <tbody>
-            {tutors.map(t => (
-              <tr key={t.name}>
-                <td>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                    <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 700, fontSize: 13 }}>{t.name.split(' ').map(n => n[0]).join('')}</div>
-                    <div>
-                      <div style={{ fontWeight: 600, fontSize: 13.5 }}>{t.name}</div>
-                      <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>{t.email}</div>
+      <div className="card">
+        <div className="table-responsive">
+          <table className="table table-hover">
+            <thead>
+              <tr><th>Tutor</th><th>Specialization</th><th>Courses</th><th>Students</th><th>Status</th><th>Actions</th></tr>
+            </thead>
+            <tbody>
+              {tutors.map(t => (
+                <tr key={t.name}>
+                  <td>
+                    <div className="d-flex align-items-center gap-2">
+                      <div className="avatar bg-label-primary rounded-circle">
+                        <span className="avatar-initial rounded-circle">{t.name.split(' ').map(n => n[0]).join('')}</span>
+                      </div>
+                      <div>
+                        <div className="fw-semibold">{t.name}</div>
+                        <small className="text-body-secondary">{t.email}</small>
+                      </div>
                     </div>
-                  </div>
-                </td>
-                <td><span className="badge badge-info">{t.spec}</span></td>
-                <td style={{ fontWeight: 600 }}>{t.courses}</td>
-                <td style={{ fontWeight: 600 }}>{t.students}</td>
-                <td><span className={`badge ${statusStyle[t.status]}`}>{t.status}</span></td>
-                <td>
-                  <div style={{ display: 'flex', gap: 6 }}>
-                    <button className="btn-outline" style={{ fontSize: 12, padding: '5px 10px' }}>Edit Permissions</button>
-                    <button className="btn-outline" style={{ fontSize: 12, padding: '5px 10px' }}>Assign Course</button>
-                    {t.status === 'Active' && <button style={{ background: '#fde8e8', border: 'none', color: 'var(--error)', borderRadius: 6, padding: '5px 10px', fontSize: 12, cursor: 'pointer', fontWeight: 600 }}>Deactivate</button>}
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                  </td>
+                  <td><span className="badge bg-label-info">{t.spec}</span></td>
+                  <td className="fw-semibold">{t.courses}</td>
+                  <td className="fw-semibold">{t.students}</td>
+                  <td><span className={`badge ${statusBadge[t.status]}`}>{t.status}</span></td>
+                  <td>
+                    <div className="d-flex gap-2">
+                      <button className="btn btn-sm btn-outline-secondary">Edit Permissions</button>
+                      <button className="btn btn-sm btn-outline-secondary">Assign Course</button>
+                      {t.status === 'Active' && (
+                        <button className="btn btn-sm btn-outline-danger">Deactivate</button>
+                      )}
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </AdminLayout>
   );

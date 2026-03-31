@@ -1,72 +1,102 @@
-'use client';
-import { useState } from 'react';
-import StudentLayout from '@/components/layouts/StudentLayout';
+'use client'
+import { useState } from 'react'
+import StudentLayout from '@/components/layouts/StudentLayout'
 
-const issues = ['Establish jurisdiction of the Sessions Court', 'State the specific offence — Section 302 IPC', 'Lay out the prima facie evidence against the accused', 'Include the appropriate prayer for trial'];
-const lawSections = ['Sec 299 IPC', 'Sec 300 IPC', 'Sec 302 IPC', 'Sec 304 IPC', 'Sec 154 CrPC'];
+const issues = ['Establish jurisdiction of the Sessions Court', 'State the specific offence — Section 302 IPC', 'Lay out the prima facie evidence against the accused', 'Include the appropriate prayer for trial']
+const lawSections = ['Sec 299 IPC', 'Sec 300 IPC', 'Sec 302 IPC', 'Sec 304 IPC', 'Sec 154 CrPC']
 const precedents = [
   { name: 'State of UP v. Ram Sagar Yadav', court: 'Supreme Court', year: '1985', holding: 'Ingredients of Section 302 — intention to cause death established by surrounding circumstances' },
   { name: 'Bachan Singh v. State of Punjab', court: 'Supreme Court', year: '1980', holding: 'Death penalty under Section 302 — rarest of rare doctrine established' },
-];
+]
 
 const iracStatus = [
-  { label: 'Issue', status: 'green', note: 'Well identified' },
-  { label: 'Rule', status: 'green', note: 'Sections cited' },
-  { label: 'Application', status: 'amber', note: 'Needs more facts' },
-  { label: 'Conclusion', status: 'red', note: 'Prayer missing' },
-];
+  { label: 'Issue', status: 'success', note: 'Well identified' },
+  { label: 'Rule', status: 'success', note: 'Sections cited' },
+  { label: 'Application', status: 'warning', note: 'Needs more facts' },
+  { label: 'Conclusion', status: 'danger', note: 'Prayer missing' },
+]
+
+const statusIcon: Record<string, string> = {
+  success: 'ti tabler-check',
+  warning: 'ti tabler-alert-triangle',
+  danger: 'ti tabler-x',
+}
 
 export default function CaseDraftingPage() {
-  const [briefOpen, setBriefOpen] = useState(true);
-  const [checkedIssues, setCheckedIssues] = useState([true, true, false, false]);
+  const [briefOpen, setBriefOpen] = useState(true)
+  const [checkedIssues, setCheckedIssues] = useState([true, true, false, false])
 
   return (
-    <div style={{ minHeight: '100vh', background: 'var(--page-bg)', display: 'flex', flexDirection: 'column' }}>
+    <div className="min-vh-100 d-flex flex-column" style={{ backgroundColor: '#f8f7fa' }}>
       {/* Top bar */}
-      <div style={{ background: '#fff', borderBottom: '1px solid var(--border)', padding: '10px 20px', display: 'flex', alignItems: 'center', gap: 14, position: 'sticky', top: 0, zIndex: 50 }}>
-        <a href="/student/practice-lab" style={{ fontSize: 13, color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: 4 }}>← Back</a>
-        <div style={{ fontSize: 16, fontWeight: 700 }}>⚖️ Case Drafting Studio</div>
-        <span className="badge badge-warning">Intermediate</span>
-        <span style={{ fontSize: 12, color: 'var(--text-muted)', marginLeft: 4 }}>Bail Application — Sessions Court</span>
-        <div style={{ marginLeft: 'auto', display: 'flex', gap: 10, alignItems: 'center' }}>
-          <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>💾 Saved 2 min ago</span>
-          <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>847 words · ~3 pages</span>
-          <button className="btn-primary" style={{ fontSize: 13, background: 'var(--success)' }}>📤 Submit for Review</button>
+      <div className="sticky-top bg-white border-bottom shadow-sm d-flex align-items-center gap-3 px-4" style={{ height: 52, zIndex: 50 }}>
+        <a href="/student/practice-lab" className="small text-body-secondary text-decoration-none d-flex align-items-center gap-1">
+          <i className="ti tabler-chevron-left"></i> Back
+        </a>
+        <div className="d-flex align-items-center gap-2">
+          <i className="ti tabler-scale text-primary"></i>
+          <span className="fw-bold text-heading">Case Drafting Studio</span>
+        </div>
+        <span className="badge bg-label-warning">Intermediate</span>
+        <span className="extra-small text-body-secondary">Bail Application — Sessions Court</span>
+        <div className="ms-auto d-flex gap-2 align-items-center">
+          <span className="extra-small text-body-secondary">
+            <i className="ti tabler-device-floppy me-1"></i>Saved 2 min ago
+          </span>
+          <span className="extra-small text-body-secondary">847 words · ~3 pages</span>
+          <button className="btn btn-success btn-sm d-flex align-items-center gap-1">
+            <i className="ti tabler-upload small"></i>
+            Submit for Review
+          </button>
         </div>
       </div>
 
-      <div style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
+      <div className="d-flex flex-grow-1 overflow-hidden">
         {/* Case Brief Panel */}
-        <div style={{ width: briefOpen ? 280 : 40, background: '#fff', borderRight: '1px solid var(--border)', transition: 'width 0.2s', overflow: 'hidden', flexShrink: 0 }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 14px', borderBottom: '1px solid var(--border)' }}>
-            {briefOpen && <span style={{ fontWeight: 700, fontSize: 13 }}>📋 Case Brief</span>}
-            <button onClick={() => setBriefOpen(o => !o)} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 16, color: 'var(--text-muted)' }}>{briefOpen ? '◀' : '▶'}</button>
+        <div className="bg-white border-end flex-shrink-0 overflow-hidden" style={{ width: briefOpen ? 280 : 40, transition: 'width 0.2s' }}>
+          <div className="d-flex align-items-center justify-content-between px-3 py-2 border-bottom">
+            {briefOpen && (
+              <span className="fw-bold small d-flex align-items-center gap-1">
+                <i className="ti tabler-clipboard-list text-primary"></i> Case Brief
+              </span>
+            )}
+            <button onClick={() => setBriefOpen(o => !o)} className="btn btn-sm p-0 text-body-secondary border-0 bg-transparent">
+              <i className={`ti ${briefOpen ? 'tabler-chevron-left' : 'tabler-chevron-right'}`}></i>
+            </button>
           </div>
           {briefOpen && (
-            <div style={{ padding: 14, overflowY: 'auto', maxHeight: 'calc(100vh - 100px)' }}>
-              <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--text-muted)', marginBottom: 8, textTransform: 'uppercase', letterSpacing: 0.5 }}>Facts</div>
-              <p style={{ fontSize: 12.5, color: 'var(--text-primary)', lineHeight: 1.6, marginBottom: 14 }}>
+            <div className="p-3 overflow-auto" style={{ maxHeight: 'calc(100vh - 100px)' }}>
+              <p className="extra-small fw-bold text-body-secondary text-uppercase mb-2" style={{ letterSpacing: 0.5 }}>Facts</p>
+              <p className="extra-small text-heading lh-base mb-3">
                 Accused Ram Kumar allegedly caused the death of Shyam Lal on January 15, 2025 at approximately 11 PM in New Delhi. Witnesses place the accused at the scene. A weapon matching injuries was recovered from the accused. The accused has a prior criminal record.
               </p>
-              <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--text-muted)', marginBottom: 8, textTransform: 'uppercase', letterSpacing: 0.5 }}>Issues to Address</div>
+
+              <p className="extra-small fw-bold text-body-secondary text-uppercase mb-2" style={{ letterSpacing: 0.5 }}>Issues to Address</p>
               {issues.map((issue, i) => (
-                <label key={i} style={{ display: 'flex', gap: 8, marginBottom: 8, cursor: 'pointer', alignItems: 'flex-start' }}>
-                  <input type="checkbox" checked={checkedIssues[i]} onChange={e => { const n = [...checkedIssues]; n[i] = e.target.checked; setCheckedIssues(n); }} style={{ accentColor: 'var(--primary)', marginTop: 2 }} />
-                  <span style={{ fontSize: 12, color: checkedIssues[i] ? 'var(--text-primary)' : 'var(--text-muted)', textDecoration: checkedIssues[i] ? 'line-through' : 'none', lineHeight: 1.4 }}>{issue}</span>
+                <label key={i} className="d-flex gap-2 mb-2 cursor-pointer align-items-start">
+                  <input
+                    type="checkbox"
+                    className="form-check-input mt-1"
+                    checked={checkedIssues[i]}
+                    onChange={e => { const n = [...checkedIssues]; n[i] = e.target.checked; setCheckedIssues(n) }}
+                  />
+                  <span className={`extra-small lh-base ${checkedIssues[i] ? 'text-heading text-decoration-line-through' : 'text-body-secondary'}`}>{issue}</span>
                 </label>
               ))}
-              <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--text-muted)', marginBottom: 8, marginTop: 14, textTransform: 'uppercase', letterSpacing: 0.5 }}>Relevant Sections</div>
-              <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 14 }}>
+
+              <p className="extra-small fw-bold text-body-secondary text-uppercase mb-2 mt-3" style={{ letterSpacing: 0.5 }}>Relevant Sections</p>
+              <div className="d-flex flex-wrap gap-1 mb-3">
                 {lawSections.map(s => (
-                  <span key={s} style={{ background: 'var(--primary-light)', color: 'var(--primary)', borderRadius: 20, padding: '3px 10px', fontSize: 11, fontWeight: 600, cursor: 'pointer' }}>{s}</span>
+                  <span key={s} className="badge bg-label-primary extra-small cursor-pointer">{s}</span>
                 ))}
               </div>
-              <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--text-muted)', marginBottom: 8, textTransform: 'uppercase', letterSpacing: 0.5 }}>Precedents</div>
+
+              <p className="extra-small fw-bold text-body-secondary text-uppercase mb-2" style={{ letterSpacing: 0.5 }}>Precedents</p>
               {precedents.map((p, i) => (
-                <div key={i} style={{ padding: 10, background: '#fafafa', borderRadius: 8, marginBottom: 8, border: '1px solid var(--border)' }}>
-                  <div style={{ fontSize: 12, fontWeight: 700 }}>{p.name}</div>
-                  <div style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 2 }}>{p.court} · {p.year}</div>
-                  <div style={{ fontSize: 11.5, color: 'var(--text-primary)', marginTop: 4, lineHeight: 1.4, fontStyle: 'italic' }}>{p.holding}</div>
+                <div key={i} className="border rounded p-2 mb-2 bg-label-secondary">
+                  <p className="extra-small fw-bold text-heading mb-0">{p.name}</p>
+                  <p className="extra-small text-body-secondary mb-1">{p.court} · {p.year}</p>
+                  <p className="extra-small text-heading fst-italic lh-base mb-0">{p.holding}</p>
                 </div>
               ))}
             </div>
@@ -74,20 +104,30 @@ export default function CaseDraftingPage() {
         </div>
 
         {/* Editor */}
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', padding: 24, overflowY: 'auto' }}>
-          <div className="card" style={{ padding: 0, overflow: 'hidden', flex: 1 }}>
+        <div className="flex-grow-1 d-flex flex-column p-4 overflow-auto">
+          <div className="card shadow-sm flex-grow-1 overflow-hidden">
             {/* Toolbar */}
-            <div style={{ display: 'flex', gap: 4, padding: '10px 14px', borderBottom: '1px solid var(--border)', background: '#fafafa', flexWrap: 'wrap' }}>
-              {[['B','font-weight'], ['I','font-style'], ['U','text-decoration'], '|', ['≡','list'], ['⊞','grid'], '|', ['📌','cite'], ['⊕','section']].map((btn, i) => (
-                btn === '|' ? <div key={i} style={{ width: 1, background: 'var(--border)', margin: '0 4px' }} /> :
-                <button key={i} style={{ padding: '4px 10px', border: '1px solid var(--border)', borderRadius: 4, background: '#fff', cursor: 'pointer', fontSize: 12, fontWeight: 700, color: 'var(--text-muted)' }}>{(btn as string[])[0]}</button>
+            <div className="d-flex gap-1 px-3 py-2 border-bottom bg-label-secondary flex-wrap align-items-center">
+              {['B', 'I', 'U'].map(f => (
+                <button key={f} className="btn btn-sm px-2 py-1 text-heading extra-small fw-bold">{f}</button>
               ))}
-              <div style={{ marginLeft: 'auto', display: 'flex', gap: 6 }}>
-                <button className="btn-outline" style={{ fontSize: 11, padding: '4px 10px' }}>⚖️ Legal Formatting</button>
-                <button className="btn-outline" style={{ fontSize: 11, padding: '4px 10px' }}>＋ Insert Section</button>
+              <div className="vr mx-1"></div>
+              {['H1', 'H2', 'List', '1.'].map(f => (
+                <button key={f} className="btn btn-sm px-2 py-1 text-heading extra-small fw-medium">{f}</button>
+              ))}
+              <div className="vr mx-1"></div>
+              <button className="btn btn-sm px-2 py-1 text-heading extra-small"><i className="ti tabler-pin"></i></button>
+              <button className="btn btn-sm px-2 py-1 text-heading extra-small"><i className="ti tabler-plus"></i></button>
+              <div className="ms-auto d-flex gap-2">
+                <button className="btn btn-outline-secondary btn-sm extra-small">
+                  <i className="ti tabler-scale me-1"></i>Legal Formatting
+                </button>
+                <button className="btn btn-outline-secondary btn-sm extra-small">
+                  <i className="ti tabler-plus me-1"></i>Insert Section
+                </button>
               </div>
             </div>
-            <textarea className="form-input" style={{ flex: 1, border: 'none', borderRadius: 0, fontFamily: '"Times New Roman", serif', fontSize: 14, lineHeight: 2, padding: 28, resize: 'none', minHeight: 500 }} defaultValue={`IN THE HON'BLE SESSIONS COURT AT NEW DELHI
+            <textarea className="form-control border-0 shadow-none flex-grow-1 p-4" style={{ fontFamily: '"Times New Roman", serif', fontSize: 14, lineHeight: 2, resize: 'none', minHeight: 500 }} defaultValue={`IN THE HON'BLE SESSIONS COURT AT NEW DELHI
 Criminal Case No. ___ of 2025
 
 IN THE MATTER OF:
@@ -117,55 +157,63 @@ Submitted under Section 173 of the Code of Criminal Procedure, 1973
    (b) Material Evidence: A weapon matching the injuries was recovered...
 
 5. PRAYER
-   [TO BE COMPLETED]`} />
+   [TO BE COMPLETED]`}></textarea>
           </div>
         </div>
 
         {/* AI Assistant Panel */}
-        <div style={{ width: 290, background: '#fff', borderLeft: '1px solid var(--border)', display: 'flex', flexDirection: 'column', flexShrink: 0 }}>
-          <div style={{ padding: '12px 14px', borderBottom: '1px solid var(--border)', fontWeight: 700, fontSize: 13 }}>🤖 AI Legal Assistant</div>
+        <div className="bg-white border-start d-flex flex-column flex-shrink-0" style={{ width: 290 }}>
+          <div className="px-3 py-2 border-bottom fw-bold small d-flex align-items-center gap-2">
+            <i className="ti tabler-robot text-primary"></i> AI Legal Assistant
+          </div>
 
           {/* IRAC Checker */}
-          <div style={{ padding: 14, borderBottom: '1px solid var(--border)' }}>
-            <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--text-muted)', marginBottom: 10 }}>LIVE IRAC CHECKER</div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
+          <div className="p-3 border-bottom">
+            <p className="extra-small fw-bold text-body-secondary text-uppercase mb-2" style={{ letterSpacing: 0.5 }}>Live IRAC Checker</p>
+            <div className="row g-2">
               {iracStatus.map(s => (
-                <div key={s.label} style={{ padding: '8px 10px', borderRadius: 8, background: s.status === 'green' ? '#e8faf0' : s.status === 'amber' ? '#fff5e6' : '#fde8e8', border: `1px solid ${s.status === 'green' ? 'var(--success)' : s.status === 'amber' ? 'var(--warning)' : 'var(--error)'}` }}>
-                  <div style={{ fontSize: 12, fontWeight: 700, color: s.status === 'green' ? 'var(--success)' : s.status === 'amber' ? 'var(--warning)' : 'var(--error)', marginBottom: 2 }}>
-                    {s.status === 'green' ? '✓' : s.status === 'amber' ? '⚠' : '✗'} {s.label}
+                <div key={s.label} className="col-6">
+                  <div className={`p-2 rounded bg-label-${s.status} border border-${s.status} border-opacity-25`}>
+                    <p className={`extra-small fw-bold text-${s.status} d-flex align-items-center gap-1 mb-1`}>
+                      <i className={statusIcon[s.status]}></i> {s.label}
+                    </p>
+                    <p className="extra-small text-body-secondary mb-0">{s.note}</p>
                   </div>
-                  <div style={{ fontSize: 10.5, color: 'var(--text-muted)' }}>{s.note}</div>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Chat */}
-          <div style={{ flex: 1, overflowY: 'auto', padding: 14, display: 'flex', flexDirection: 'column', gap: 10 }}>
-            <div style={{ padding: '10px 12px', background: 'var(--primary-light)', borderRadius: 10, borderBottomLeftRadius: 2 }}>
-              <div style={{ fontSize: 11, color: 'var(--primary)', fontWeight: 700, marginBottom: 4 }}>AI Legal Assistant</div>
-              <div style={{ fontSize: 12.5, lineHeight: 1.6 }}>Your draft is looking good! I notice Section 5 (Prayer) is incomplete — this is critical for any charge sheet. A prayer clause should request the court to take cognizance and commit the case to trial.</div>
-              <button style={{ marginTop: 8, background: 'var(--primary)', color: '#fff', border: 'none', borderRadius: 6, padding: '5px 10px', fontSize: 11, cursor: 'pointer', fontWeight: 600 }}>⬇ Insert into Draft</button>
+          <div className="flex-grow-1 overflow-auto p-3 d-flex flex-column gap-2">
+            <div className="bg-label-primary rounded p-3" style={{ borderBottomLeftRadius: 2 }}>
+              <p className="extra-small text-primary fw-bold mb-1">AI Legal Assistant</p>
+              <p className="extra-small lh-base mb-2">Your draft is looking good! I notice Section 5 (Prayer) is incomplete — this is critical for any charge sheet. A prayer clause should request the court to take cognizance and commit the case to trial.</p>
+              <button className="btn btn-primary btn-sm extra-small">
+                <i className="ti tabler-arrow-down me-1"></i>Insert into Draft
+              </button>
             </div>
-            <div style={{ padding: '10px 12px', background: '#f3f3f5', borderRadius: 10, borderBottomRightRadius: 2, alignSelf: 'flex-end', maxWidth: '85%' }}>
-              <div style={{ fontSize: 12.5 }}>Can you help me draft the prayer clause?</div>
+            <div className="bg-label-secondary rounded p-3 align-self-end" style={{ maxWidth: '85%', borderBottomRightRadius: 2 }}>
+              <p className="extra-small mb-0">Can you help me draft the prayer clause?</p>
             </div>
           </div>
 
           {/* Quick actions */}
-          <div style={{ padding: '10px 14px', borderTop: '1px solid var(--border)' }}>
-            <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 10 }}>
+          <div className="p-3 border-top">
+            <div className="d-flex flex-wrap gap-1 mb-2">
               {['Suggest grounds', 'Check structure', 'Find case laws', 'Draft prayer'].map(label => (
-                <button key={label} style={{ background: 'var(--primary-light)', border: '1px solid var(--primary)', color: 'var(--primary)', borderRadius: 20, padding: '4px 10px', fontSize: 11, cursor: 'pointer', fontWeight: 500 }}>{label}</button>
+                <button key={label} className="badge bg-label-primary border border-primary border-opacity-25 text-primary extra-small cursor-pointer">{label}</button>
               ))}
             </div>
-            <div style={{ display: 'flex', gap: 6 }}>
-              <input className="form-input" style={{ flex: 1, fontSize: 12, padding: '7px 10px' }} placeholder="Ask the AI..." />
-              <button className="btn-primary" style={{ padding: '7px 12px', fontSize: 13 }}>→</button>
+            <div className="input-group input-group-sm">
+              <input className="form-control shadow-none extra-small" placeholder="Ask the AI..." />
+              <button className="btn btn-primary">
+                <i className="ti tabler-send"></i>
+              </button>
             </div>
           </div>
         </div>
       </div>
     </div>
-  );
+  )
 }

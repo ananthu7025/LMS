@@ -2,119 +2,108 @@
 
 export default function StudentLoginPage() {
   return (
-    <div className="min-h-screen flex bg-[#F8F7FA]">
+    <div className="d-flex min-vh-100" style={{ backgroundColor: '#f8f7fa' }}>
       {/* Left decorative panel */}
-      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-gradient-to-br from-[#7367F0] via-[#5E50E2] to-[#3B1FA8] flex-col items-center justify-center p-12">
+      <div className="d-none d-lg-flex w-50 position-relative overflow-hidden flex-column align-items-center justify-content-center p-5" style={{ background: 'linear-gradient(135deg, #7367F0, #5E50E2, #3B1FA8)' }}>
         {/* Abstract circles */}
-        <div className="absolute top-[-80px] right-[-80px] w-72 h-72 rounded-full bg-white/10" />
-        <div className="absolute bottom-[-60px] left-[-60px] w-56 h-56 rounded-full bg-white/10" />
-        <div className="absolute top-1/2 left-[-100px] w-64 h-64 rounded-full bg-white/5" />
+        <div className="position-absolute rounded-circle" style={{ top: -80, right: -80, width: 288, height: 288, background: 'rgba(255,255,255,0.1)' }}></div>
+        <div className="position-absolute rounded-circle" style={{ bottom: -60, left: -60, width: 224, height: 224, background: 'rgba(255,255,255,0.1)' }}></div>
+        <div className="position-absolute rounded-circle" style={{ top: '50%', left: -100, width: 256, height: 256, background: 'rgba(255,255,255,0.05)' }}></div>
 
-        {/* Gavel + scales illustration placeholder */}
-        <div className="relative z-10 flex flex-col items-center gap-8">
-          <div className="w-32 h-32 rounded-3xl bg-white/20 backdrop-blur flex items-center justify-center shadow-2xl">
-            <span className="text-6xl">⚖️</span>
+        <div className="position-relative text-center" style={{ zIndex: 10 }}>
+          <div className="d-flex align-items-center justify-content-center rounded-4 mb-4 mx-auto shadow-lg" style={{ width: 128, height: 128, background: 'rgba(255,255,255,0.2)', backdropFilter: 'blur(8px)' }}>
+            <i className="ti tabler-scale text-white" style={{ fontSize: 64 }}></i>
           </div>
           <div className="text-center">
-            <h2 className="text-white text-3xl font-bold leading-tight">Master Law.<br />Shape Justice.</h2>
-            <p className="text-white/70 mt-3 text-base max-w-xs">
+            <h2 className="text-white fw-bold fs-3 lh-sm">Master Law.<br />Shape Justice.</h2>
+            <p className="mt-3 mx-auto" style={{ color: 'rgba(255,255,255,0.7)', maxWidth: 300 }}>
               Access 500+ curated law courses, AI-powered tutoring, and live classes from top legal faculty.
             </p>
           </div>
-          <div className="flex gap-8 mt-4">
+          <div className="d-flex gap-5 justify-content-center mt-4">
             {[['500+', 'Courses'], ['50K+', 'Students'], ['200+', 'Faculty']].map(([num, label]) => (
               <div key={label} className="text-center">
-                <p className="text-white text-2xl font-bold">{num}</p>
-                <p className="text-white/60 text-xs mt-1">{label}</p>
+                <p className="text-white fs-4 fw-bold mb-0">{num}</p>
+                <p className="extra-small mt-1 mb-0" style={{ color: 'rgba(255,255,255,0.6)' }}>{label}</p>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Bottom brand */}
-        <div className="absolute bottom-6 left-0 right-0 text-center">
-          <p className="text-white/50 text-xs">Powered by LexEd Platform</p>
+        <div className="position-absolute bottom-0 start-0 end-0 text-center pb-3">
+          <p className="extra-small mb-0" style={{ color: 'rgba(255,255,255,0.5)' }}>Powered by LexEd Platform</p>
         </div>
       </div>
 
       {/* Right login panel */}
-      <div className="flex-1 flex flex-col items-center justify-center px-6 py-12">
-        {/* Institute branding */}
-        <div className="w-full max-w-md">
-          <div className="flex flex-col items-center mb-8">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#7367F0] to-[#5E50E2] flex items-center justify-center shadow-lg mb-4">
-              <span className="text-white text-2xl font-bold">S</span>
+      <div className="flex-grow-1 d-flex flex-column align-items-center justify-content-center px-4 py-5">
+        <div className="w-100" style={{ maxWidth: 440 }}>
+          {/* Institute branding */}
+          <div className="d-flex flex-column align-items-center mb-5">
+            <div className="avatar avatar-lg rounded-3 bg-primary shadow-lg mb-3 d-flex align-items-center justify-content-center">
+              <span className="text-white fw-bold fs-4">S</span>
             </div>
-            <h1 className="text-2xl font-bold text-[#4B465C]">Sharma Law Academy</h1>
-            <p className="text-[#A8AAAE] text-sm mt-1">Student Learning Portal</p>
+            <h4 className="fw-bold text-heading mb-0">Sharma Law Academy</h4>
+            <p className="text-body-secondary small mt-1 mb-0">Student Learning Portal</p>
           </div>
 
           {/* Card */}
-          <div className="bg-white rounded-xl border border-[#DBDADE] shadow-sm p-8">
-            <h2 className="text-xl font-semibold text-[#4B465C] mb-1">Welcome back! 👋</h2>
-            <p className="text-[#A8AAAE] text-sm mb-6">Please sign in to your student account</p>
+          <div className="card shadow-sm">
+            <div className="card-body p-4 p-md-5">
+              <h5 className="fw-bold text-heading mb-1">Welcome back! 👋</h5>
+              <p className="text-body-secondary small mb-4">Please sign in to your student account</p>
 
-            <div className="space-y-4">
               {/* Email */}
-              <div>
-                <label className="block text-sm font-medium text-[#4B465C] mb-1.5">Email Address</label>
+              <div className="mb-3">
+                <label className="form-label small fw-medium">Email Address</label>
                 <input
                   type="email"
                   placeholder="student@example.com"
                   defaultValue="arjun.sharma@gmail.com"
-                  className="w-full px-3.5 py-2.5 rounded-lg border border-[#DBDADE] text-[#4B465C] text-sm placeholder:text-[#A8AAAE] focus:outline-none focus:border-[#7367F0] focus:ring-2 focus:ring-[#7367F0]/20 transition"
+                  className="form-control shadow-none"
                 />
               </div>
 
               {/* Password */}
-              <div>
-                <div className="flex items-center justify-between mb-1.5">
-                  <label className="block text-sm font-medium text-[#4B465C]">Password</label>
-                  <a href="#" className="text-xs text-[#7367F0] hover:underline">Forgot Password?</a>
+              <div className="mb-3">
+                <div className="d-flex align-items-center justify-content-between mb-1">
+                  <label className="form-label small fw-medium mb-0">Password</label>
+                  <a href="#" className="extra-small text-primary text-decoration-none">Forgot Password?</a>
                 </div>
-                <div className="relative">
+                <div className="input-group input-group-merge">
                   <input
                     type="password"
                     placeholder="············"
                     defaultValue="password"
-                    className="w-full px-3.5 py-2.5 rounded-lg border border-[#DBDADE] text-[#4B465C] text-sm placeholder:text-[#A8AAAE] focus:outline-none focus:border-[#7367F0] focus:ring-2 focus:ring-[#7367F0]/20 transition pr-10"
+                    className="form-control shadow-none"
                   />
-                  <button className="absolute right-3 top-1/2 -translate-y-1/2 text-[#A8AAAE] hover:text-[#4B465C]">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                    </svg>
-                  </button>
+                  <span className="input-group-text cursor-pointer">
+                    <i className="ti tabler-eye text-body-secondary"></i>
+                  </span>
                 </div>
               </div>
 
               {/* Remember me */}
-              <div className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  id="remember"
-                  defaultChecked
-                  className="w-4 h-4 rounded border-[#DBDADE] text-[#7367F0] accent-[#7367F0]"
-                />
-                <label htmlFor="remember" className="text-sm text-[#4B465C]">Remember me</label>
+              <div className="form-check mb-4">
+                <input className="form-check-input" type="checkbox" id="remember" defaultChecked />
+                <label className="form-check-label small" htmlFor="remember">Remember me</label>
               </div>
 
               {/* Login button */}
-              <button className="w-full py-2.5 bg-[#7367F0] hover:bg-[#5E50E2] text-white font-semibold rounded-lg transition shadow-sm text-sm mt-2">
+              <button className="btn btn-primary w-100 py-2 fw-bold">
                 Sign In
               </button>
-            </div>
 
-            <p className="text-center text-sm text-[#A8AAAE] mt-6">
-              New student?{' '}
-              <a href="/student/signup" className="text-[#7367F0] font-medium hover:underline">Create Account</a>
-            </p>
+              <p className="text-center small text-body-secondary mt-4 mb-0">
+                New student?{' '}
+                <a href="/student/signup" className="text-primary fw-medium text-decoration-none">Create Account</a>
+              </p>
+            </div>
           </div>
 
           {/* Footer */}
-          <p className="text-center text-xs text-[#A8AAAE] mt-6">
-            Powered by{' '}
-            <span className="text-[#7367F0] font-semibold">LexEd</span>
+          <p className="text-center extra-small text-body-secondary mt-4 mb-0">
+            Powered by <span className="text-primary fw-bold">LexEd</span>
           </p>
         </div>
       </div>

@@ -3,95 +3,127 @@ import AdminLayout from '@/components/layouts/AdminLayout';
 
 const curriculum = [
   { title: 'Module 1: Introduction to Criminal Law', lessons: [
-    { type: '🎥', title: 'Overview of Criminal Law in India', duration: '18 min', published: true },
-    { type: '📄', title: 'IPC Structure and History — PDF Notes', duration: '12 pages', published: true },
-    { type: '📝', title: 'Quiz: Basics of IPC', duration: '10 Qs', published: true },
+    { type: 'tabler-video',    title: 'Overview of Criminal Law in India',           duration: '18 min',       published: true },
+    { type: 'tabler-file',     title: 'IPC Structure and History — PDF Notes',        duration: '12 pages',     published: true },
+    { type: 'tabler-notes',    title: 'Quiz: Basics of IPC',                          duration: '10 Qs',        published: true },
   ]},
   { title: 'Module 2: Offences Against the Person', lessons: [
-    { type: '🎥', title: 'Section 299–304: Culpable Homicide & Murder', duration: '42 min', published: true },
-    { type: '🎥', title: 'Section 320–326: Grievous Hurt & Assault', duration: '28 min', published: true },
-    { type: '🔴', title: 'Live Class: Case Study — State v. Ram Chandra', duration: 'Apr 2 @ 10 AM', published: true },
-    { type: '📋', title: 'Assignment: Write a charge sheet for a given scenario', duration: '25 marks', published: false },
+    { type: 'tabler-video',    title: 'Section 299–304: Culpable Homicide & Murder',  duration: '42 min',       published: true },
+    { type: 'tabler-video',    title: 'Section 320–326: Grievous Hurt & Assault',     duration: '28 min',       published: true },
+    { type: 'tabler-broadcast',title: 'Live Class: Case Study — State v. Ram Chandra',duration: 'Apr 2 @ 10 AM',published: true },
+    { type: 'tabler-clipboard',title: 'Assignment: Write a charge sheet for a given scenario', duration: '25 marks', published: false },
   ]},
   { title: 'Module 3: Property Offences', lessons: [
-    { type: '🎥', title: 'Theft, Robbery & Dacoity: Sections 378–402', duration: '35 min', published: true },
-    { type: '🎥', title: 'Cheating & Criminal Breach of Trust', duration: '30 min', published: false },
-    { type: '📝', title: 'Quiz: Property Offences MCQ (20 questions)', duration: '20 Qs', published: true },
+    { type: 'tabler-video',    title: 'Theft, Robbery & Dacoity: Sections 378–402',  duration: '35 min',       published: true },
+    { type: 'tabler-video',    title: 'Cheating & Criminal Breach of Trust',          duration: '30 min',       published: false },
+    { type: 'tabler-notes',    title: 'Quiz: Property Offences MCQ (20 questions)',   duration: '20 Qs',        published: true },
   ]},
 ];
 
 export default function CurriculumBuilderPage() {
   return (
-    <AdminLayout active="/admin/courses" title="Curriculum Builder" breadcrumb="Home / Courses / Criminal Law Fundamentals / Curriculum">
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
-        <div style={{ display: 'flex', gap: 8 }}>
-          <a href="/admin/courses/1"><button className="btn-outline" style={{ fontSize: 13 }}>← Back to Course</button></a>
-          <button className="btn-outline" style={{ fontSize: 13 }}>👁️ Preview as Student</button>
+    <AdminLayout title="Curriculum Builder" breadcrumb="Home / Courses / Criminal Law Fundamentals / Curriculum">
+
+      <div className="d-flex justify-content-between align-items-center mb-4">
+        <div className="d-flex gap-2">
+          <a href="/admin/courses/1" className="btn btn-outline-secondary btn-sm">
+            <i className="ti tabler-arrow-left me-1"></i>Back to Course
+          </a>
+          <button className="btn btn-outline-secondary btn-sm">
+            <i className="ti tabler-eye me-1"></i>Preview as Student
+          </button>
         </div>
-        <div style={{ display: 'flex', gap: 10 }}>
-          <button className="btn-outline">💾 Save Draft</button>
-          <button className="btn-primary">🚀 Publish Course</button>
+        <div className="d-flex gap-2">
+          <button className="btn btn-outline-secondary">
+            <i className="ti tabler-device-floppy me-1"></i>Save Draft
+          </button>
+          <button className="btn btn-primary">
+            <i className="ti tabler-rocket me-1"></i>Publish Course
+          </button>
         </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 280px', gap: 20 }}>
-        <div>
+      <div className="row g-4">
+        {/* Modules */}
+        <div className="col-xl-8">
           {curriculum.map((section, si) => (
-            <div key={si} className="card" style={{ marginBottom: 16, overflow: 'hidden' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '14px 18px', background: '#fafafa', borderBottom: '1px solid var(--border)' }}>
-                <span style={{ color: 'var(--text-muted)', cursor: 'grab', fontSize: 16 }}>⠿</span>
-                <input style={{ flex: 1, border: 'none', background: 'transparent', fontSize: 14, fontWeight: 700, color: 'var(--text-primary)' }} defaultValue={section.title} />
-                <span style={{ fontSize: 12, color: 'var(--text-muted)' }}>{section.lessons.length} lessons</span>
-                <button style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--text-muted)', fontSize: 16 }}>∨</button>
-                <button style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--error)', fontSize: 14 }}>🗑️</button>
+            <div key={si} className="card mb-3">
+              <div className="card-header d-flex align-items-center gap-2 bg-light">
+                <i className="ti tabler-grip-vertical text-body-secondary" style={{ cursor: 'grab' }}></i>
+                <input className="form-control border-0 bg-transparent fw-bold p-0 flex-grow-1" defaultValue={section.title} />
+                <small className="text-body-secondary">{section.lessons.length} lessons</small>
+                <button className="btn btn-icon btn-text-secondary btn-sm">
+                  <i className="ti tabler-chevron-down"></i>
+                </button>
+                <button className="btn btn-icon btn-text-danger btn-sm">
+                  <i className="ti tabler-trash"></i>
+                </button>
               </div>
-              {section.lessons.map((lesson, li) => (
-                <div key={li} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '12px 18px', borderBottom: '1px solid var(--border)', background: '#fff' }}>
-                  <span style={{ color: 'var(--text-muted)', cursor: 'grab', fontSize: 14 }}>⠿</span>
-                  <span style={{ fontSize: 16 }}>{lesson.type}</span>
-                  <input style={{ flex: 1, border: 'none', background: 'transparent', fontSize: 13.5, color: 'var(--text-primary)' }} defaultValue={lesson.title} />
-                  <span style={{ fontSize: 12, color: 'var(--text-muted)', minWidth: 80, textAlign: 'right' }}>{lesson.duration}</span>
-                  <div className={`toggle ${lesson.published ? '' : 'off'}`} style={{ transform: 'scale(0.8)' }} />
-                  <button style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--error)', fontSize: 14 }}>🗑️</button>
-                </div>
-              ))}
-              <div style={{ padding: '10px 18px' }}>
-                <div style={{ position: 'relative', display: 'inline-block' }}>
-                  <button className="btn-outline" style={{ fontSize: 12, padding: '6px 14px', color: 'var(--primary)', borderColor: 'var(--primary)' }}>＋ Add Lesson ∨</button>
-                  <div style={{ position: 'absolute', top: '100%', left: 0, background: '#fff', border: '1px solid var(--border)', borderRadius: 8, padding: 6, zIndex: 10, minWidth: 160, marginTop: 4, boxShadow: '0 4px 16px rgba(0,0,0,0.1)' }}>
-                    {[['🎥', 'Video Lesson'], ['📄', 'PDF Notes'], ['🔴', 'Live Class'], ['📝', 'Quiz'], ['📋', 'Assignment']].map(([icon, label]) => (
-                      <div key={label as string} style={{ padding: '8px 12px', cursor: 'pointer', borderRadius: 6, fontSize: 13 }} onMouseOver={e => (e.currentTarget.style.background = '#f3f3f5')} onMouseOut={e => (e.currentTarget.style.background = 'transparent')}>
-                        {icon as string} {label as string}
-                      </div>
-                    ))}
+              <div className="card-body p-0">
+                {section.lessons.map((lesson, li) => (
+                  <div key={li} className="d-flex align-items-center gap-2 px-4 py-3 border-bottom">
+                    <i className="ti tabler-grip-vertical text-body-secondary" style={{ cursor: 'grab', fontSize: 12 }}></i>
+                    <i className={`ti ${lesson.type} text-body-secondary`}></i>
+                    <input className="form-control border-0 p-0 flex-grow-1 small" defaultValue={lesson.title} />
+                    <small className="text-body-secondary text-nowrap">{lesson.duration}</small>
+                    <div className="form-check form-switch mb-0">
+                      <input className="form-check-input" type="checkbox" defaultChecked={lesson.published} />
+                    </div>
+                    <button className="btn btn-icon btn-text-danger btn-sm">
+                      <i className="ti tabler-trash"></i>
+                    </button>
+                  </div>
+                ))}
+                <div className="px-4 py-2">
+                  <div className="dropdown">
+                    <button className="btn btn-sm btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown">
+                      <i className="ti tabler-plus me-1"></i>Add Lesson
+                    </button>
+                    <ul className="dropdown-menu">
+                      {[['tabler-video','Video Lesson'],['tabler-file','PDF Notes'],['tabler-broadcast','Live Class'],['tabler-notes','Quiz'],['tabler-clipboard','Assignment']].map(([icon, label]) => (
+                        <li key={label as string}>
+                          <a className="dropdown-item d-flex align-items-center gap-2" href="#">
+                            <i className={`ti ${icon as string}`}></i>{label as string}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 </div>
               </div>
             </div>
           ))}
-          <button className="btn-outline" style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: '12px', borderStyle: 'dashed' }}>
-            ＋ Add New Section / Module
+          <button className="btn btn-outline-secondary w-100 border-dashed">
+            <i className="ti tabler-plus me-1"></i>Add New Section / Module
           </button>
         </div>
 
         {/* Sidebar */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-          <div className="card" style={{ padding: 20 }}>
-            <div style={{ fontWeight: 700, fontSize: 14, marginBottom: 12 }}>📊 Course Summary</div>
-            {[['Modules', '3'], ['Total Lessons', '10'], ['Video Lessons', '6'], ['Quizzes', '2'], ['Assignments', '1'], ['Live Classes', '1'], ['Published', '8 / 10']].map(([k, v]) => (
-              <div key={k as string} style={{ display: 'flex', justifyContent: 'space-between', padding: '7px 0', borderBottom: '1px solid var(--border)', fontSize: 13 }}>
-                <span style={{ color: 'var(--text-muted)' }}>{k as string}</span>
-                <span style={{ fontWeight: 600 }}>{v as string}</span>
-              </div>
-            ))}
+        <div className="col-xl-4">
+          <div className="card mb-4">
+            <div className="card-body">
+              <h6 className="fw-bold mb-3">
+                <i className="ti tabler-chart-bar me-2 text-primary"></i>Course Summary
+              </h6>
+              {[['Modules','3'],['Total Lessons','10'],['Video Lessons','6'],['Quizzes','2'],['Assignments','1'],['Live Classes','1'],['Published','8 / 10']].map(([k, v]) => (
+                <div key={k as string} className="d-flex justify-content-between py-2 border-bottom small">
+                  <span className="text-body-secondary">{k as string}</span>
+                  <span className="fw-semibold">{v as string}</span>
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="card" style={{ padding: 20 }}>
-            <div style={{ fontWeight: 700, fontSize: 14, marginBottom: 12 }}>💡 Tips</div>
-            <div style={{ fontSize: 12.5, color: 'var(--text-muted)', lineHeight: 1.7 }}>
-              • Drag lessons to reorder<br/>
-              • Toggle to publish/unpublish<br/>
-              • Add a quiz after each module<br/>
-              • First lesson should be free preview
+          <div className="card">
+            <div className="card-body">
+              <h6 className="fw-bold mb-3">
+                <i className="ti tabler-bulb me-2 text-primary"></i>Tips
+              </h6>
+              <ul className="small text-body-secondary ps-3 mb-0" style={{ lineHeight: 2 }}>
+                <li>Drag lessons to reorder</li>
+                <li>Toggle to publish/unpublish</li>
+                <li>Add a quiz after each module</li>
+                <li>First lesson should be free preview</li>
+              </ul>
             </div>
           </div>
         </div>

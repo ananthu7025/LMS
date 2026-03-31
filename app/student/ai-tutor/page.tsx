@@ -1,13 +1,12 @@
-'use client'
-
-import StudentLayout from '@/components/layouts/StudentLayout'
+'use client';
+import StudentLayout from '@/components/layouts/StudentLayout';
 
 const conversations = [
   { id: 1, title: 'Section 300 IPC — Murder vs Culpable Homicide', time: '2 hrs ago', active: true },
   { id: 2, title: 'Bail under Section 437 CrPC', time: 'Yesterday' },
   { id: 3, title: 'General Exceptions — Private Defence', time: '2 days ago' },
   { id: 4, title: 'Indian Evidence Act — Res Gestae', time: '3 days ago' },
-]
+];
 
 const messages = [
   {
@@ -59,7 +58,7 @@ The offender exceeded their right of private defence in good faith without preme
 **Exception 3 — Public Servant Exceeding Powers**
 A public servant acting for public justice exceeded necessary force in good faith.
 
-**Exception 4 — Sudden Fight**
+**Exception 5 — Sudden Fight**
 In a sudden fight without premeditation, in the heat of passion, upon a sudden quarrel. (*No undue advantage, no cruel manner*)
 
 **Exception 5 — Consent**
@@ -69,201 +68,197 @@ The victim, being above 18 years, consented to the risk of death or harm.
       sections: ['Sec 300 IPC Exceptions 1-5', 'Sec 304 IPC'],
     },
   },
-]
+];
 
 export default function AITutorPage() {
   return (
     <StudentLayout activePath="/student/ai-tutor">
-      <div className="h-[calc(100vh-120px)] flex rounded-xl overflow-hidden border border-[#DBDADE] shadow-sm">
-        {/* Left sidebar — conversation history */}
-        <div className="w-64 bg-white border-r border-[#DBDADE] flex flex-col">
-          <div className="p-4 border-b border-[#DBDADE]">
-            <button className="w-full flex items-center justify-center gap-2 py-2.5 bg-[#7367F0] hover:bg-[#5E50E2] text-white text-sm font-semibold rounded-lg transition">
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-              </svg>
-              New Chat
-            </button>
-          </div>
-
-          <div className="flex-1 overflow-y-auto">
-            <p className="px-4 pt-3 pb-1 text-xs font-semibold text-[#A8AAAE] uppercase tracking-wider">Recent Chats</p>
-            {conversations.map(conv => (
-              <button
-                key={conv.id}
-                className={`w-full text-left px-4 py-3 hover:bg-[#F8F7FA] transition ${conv.active ? 'bg-[#7367F0]/5 border-r-2 border-[#7367F0]' : ''}`}
-              >
-                <p className={`text-xs font-medium line-clamp-2 ${conv.active ? 'text-[#7367F0]' : 'text-[#4B465C]'}`}>{conv.title}</p>
-                <p className="text-[10px] text-[#A8AAAE] mt-0.5">{conv.time}</p>
+      <div className="card shadow-sm overflow-hidden" style={{ height: 'calc(100vh - 180px)' }}>
+        <div className="row g-0 h-100">
+          {/* Left sidebar — conversation history */}
+          <div className="col-md-3 col-lg-2 border-end d-flex flex-column bg-light h-100">
+            <div className="p-3 border-bottom bg-white">
+              <button className="btn btn-primary w-100 d-flex align-items-center justify-content-center gap-2">
+                <i className="ti tabler-plus fs-5"></i>
+                <span className="small fw-bold">New Chat</span>
               </button>
-            ))}
-          </div>
-
-          {/* Token usage */}
-          <div className="p-4 border-t border-[#DBDADE]">
-            <p className="text-xs text-[#A8AAAE] mb-1">Daily tokens used</p>
-            <div className="h-1.5 bg-[#F8F7FA] rounded-full overflow-hidden">
-              <div className="h-full bg-[#7367F0] rounded-full" style={{ width: '34%' }} />
             </div>
-            <p className="text-[10px] text-[#A8AAAE] mt-1">3,400 / 10,000</p>
-          </div>
-        </div>
 
-        {/* Main chat area */}
-        <div className="flex-1 flex flex-col bg-[#F8F7FA]">
-          {/* Context bar */}
-          <div className="bg-white border-b border-[#DBDADE] px-5 py-2.5 flex items-center gap-3">
-            <div className="flex items-center gap-2 text-xs">
-              <span className="text-[#A8AAAE]">Context:</span>
-              <span className="flex items-center gap-1.5 bg-[#7367F0]/10 text-[#7367F0] px-2.5 py-1 rounded-full font-medium">
-                <svg xmlns="http://www.w3.org/2000/svg" className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                </svg>
-                Criminal Law Fundamentals
-              </span>
-              <span className="text-[#A8AAAE]">·</span>
-              <span className="flex items-center gap-1.5 bg-[#FF9F43]/10 text-[#FF9F43] px-2.5 py-1 rounded-full font-medium">
-                Lesson: Section 300 IPC
-              </span>
-            </div>
-            <button className="ml-auto text-xs text-[#A8AAAE] hover:text-[#EA5455] transition">Clear context</button>
-          </div>
-
-          {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-5 space-y-5">
-            {messages.map((msg, i) => (
-              <div key={i} className={`flex ${msg.role === 'student' ? 'justify-end' : 'justify-start'}`}>
-                {msg.role === 'ai' && (
-                  <div className="w-8 h-8 rounded-full bg-[#7367F0] flex items-center justify-center text-white text-xs font-bold flex-shrink-0 mr-3 mt-1">
-                    AI
-                  </div>
-                )}
-
-                <div className={`max-w-[75%] ${msg.role === 'student' ? 'max-w-[55%]' : ''}`}>
-                  {msg.role === 'student' ? (
-                    <div className="bg-[#7367F0] text-white rounded-2xl rounded-tr-sm px-4 py-3 text-sm">
-                      {msg.text}
-                      <p className="text-[10px] text-white/60 mt-1 text-right">{msg.time}</p>
+            <div className="flex-grow-1 overflow-y-auto">
+              <div className="px-3 py-2 mt-2">
+                <small className="text-body-secondary text-uppercase fw-bold extra-small tracking-wider">Recent Chats</small>
+              </div>
+              <div className="list-group list-group-flush">
+                {conversations.map(conv => (
+                  <button
+                    key={conv.id}
+                    className={`list-group-item list-group-item-action border-0 px-3 py-3 rounded-0 ${conv.active ? 'bg-primary bg-opacity-10 border-start border-3 border-primary' : ''}`}
+                  >
+                    <div className={`small fw-bold line-clamp-2 mb-1 ${conv.active ? 'text-primary' : 'text-heading'}`}>{conv.title}</div>
+                    <div className="extra-small text-body-secondary d-flex align-items-center gap-1">
+                      <i className="ti tabler-clock extra-small"></i>{conv.time}
                     </div>
-                  ) : (
-                    <div className="bg-white rounded-2xl rounded-tl-sm border border-[#DBDADE] shadow-sm overflow-hidden">
-                      {'content' in msg && msg.content?.irac && (
-                        <>
-                          {/* IRAC header */}
-                          <div className="bg-[#7367F0]/5 border-b border-[#7367F0]/20 px-4 py-2 flex items-center gap-2">
-                            <span className="text-xs font-bold text-[#7367F0]">IRAC Response</span>
-                          </div>
-                          <div className="p-4 space-y-3 text-sm text-[#4B465C]">
-                            <div>
-                              <span className="text-xs font-bold text-[#EA5455] uppercase">Issue</span>
-                              <p className="mt-0.5">{msg.content.issue}</p>
-                            </div>
-                            <div>
-                              <span className="text-xs font-bold text-[#FF9F43] uppercase">Rule</span>
-                              <p className="mt-0.5">{msg.content.rule}</p>
-                            </div>
-                            <div>
-                              <span className="text-xs font-bold text-[#7367F0] uppercase">Application</span>
-                              <div className="mt-1 space-y-1">
-                                {msg.content.application?.split('\n').map((line, li) => (
-                                  <p key={li} className={line.startsWith('**') ? 'font-semibold' : line.startsWith('•') ? 'pl-2' : ''}>{line.replace(/\*\*/g, '')}</p>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Token usage */}
+            <div className="p-3 border-top bg-white">
+              <div className="d-flex justify-content-between mb-1">
+                <small className="text-body-secondary extra-small">Daily Tokens</small>
+                <small className="text-heading fw-bold extra-small">34%</small>
+              </div>
+              <div className="progress rounded-pill" style={{ height: 4 }}>
+                <div className="progress-bar" role="progressbar" style={{ width: '34%' }} aria-valuenow={34} aria-valuemin={0} aria-valuemax={100}></div>
+              </div>
+              <p className="extra-small text-body-secondary mt-1 mb-0">3,400 / 10,000 used</p>
+            </div>
+          </div>
+
+          {/* Main chat area */}
+          <div className="col-md-9 col-lg-10 d-flex flex-column h-100 bg-white">
+            {/* Context bar */}
+            <div className="px-4 py-2 border-bottom d-flex align-items-center gap-3 bg-white">
+              <div className="d-flex align-items-center gap-2 small">
+                <span className="text-body-secondary extra-small fw-bold text-uppercase">Context:</span>
+                <span className="badge bg-label-primary d-flex align-items-center gap-1 px-2 py-1">
+                  <i className="ti tabler-book-2 extra-small"></i>
+                  Criminal Law Fundamentals
+                </span>
+                <span className="badge bg-label-warning d-flex align-items-center gap-1 px-2 py-1">
+                  <i className="ti tabler-align-left extra-small"></i>
+                  Section 300 IPC
+                </span>
+              </div>
+              <button className="btn btn-sm btn-text-secondary ms-auto extra-small fw-bold">
+                <i className="ti tabler-trash me-1"></i>Clear
+              </button>
+            </div>
+
+            {/* Messages */}
+            <div className="flex-grow-1 overflow-y-auto p-4 bg-label-light">
+              <div className="d-flex flex-column gap-4">
+                {messages.map((msg, i) => (
+                  <div key={i} className={`d-flex ${msg.role === 'student' ? 'justify-content-end' : 'justify-content-start'}`}>
+                    <div className="d-flex align-items-start gap-2" style={{ maxWidth: '85%' }}>
+                      {msg.role === 'ai' && (
+                        <div className="avatar avatar-sm flex-shrink-0 mt-1">
+                          <span className="avatar-initial rounded-circle bg-primary"><i className="ti tabler-robot fs-5"></i></span>
+                        </div>
+                      )}
+
+                      <div className="d-flex flex-column">
+                        <div className={`card shadow-none border-0 ${msg.role === 'student' ? 'bg-primary text-white rounded-end-0' : 'bg-white rounded-start-0'}`}>
+                          <div className="card-body p-3">
+                            {msg.role === 'student' && <p className="mb-0 small">{msg.text}</p>}
+                            
+                            {msg.role === 'ai' && 'content' in msg && msg.content?.irac && (
+                              <div>
+                                <div className="d-flex align-items-center gap-2 mb-3 pb-2 border-bottom">
+                                  <i className="ti tabler-scale text-primary"></i>
+                                  <span className="extra-small fw-bold text-primary text-uppercase tracking-wider">IRAC Analysis</span>
+                                </div>
+                                <div className="space-y-3">
+                                  <div className="mb-3">
+                                    <span className="badge bg-label-danger extra-small mb-1">ISSUE</span>
+                                    <p className="mb-0 small fw-semibold">{msg.content.issue}</p>
+                                  </div>
+                                  <div className="mb-3">
+                                    <span className="badge bg-label-warning extra-small mb-1">RULE</span>
+                                    <p className="mb-0 small">{msg.content.rule}</p>
+                                  </div>
+                                  <div className="mb-3">
+                                    <span className="badge bg-label-primary extra-small mb-1">APPLICATION</span>
+                                    <div className="small text-body-secondary mt-1">
+                                      {msg.content.application?.split('\n').map((line, li) => (
+                                        <p key={li} className={`mb-1 ${line.startsWith('**') ? 'fw-bold text-heading' : line.startsWith('•') ? 'ps-3' : ''}`}>
+                                          {line.replace(/\*\*/g, '')}
+                                        </p>
+                                      ))}
+                                    </div>
+                                  </div>
+                                  <div>
+                                    <span className="badge bg-label-success extra-small mb-1">CONCLUSION</span>
+                                    <p className="mb-0 small fw-bold text-heading">{msg.content.conclusion}</p>
+                                  </div>
+                                </div>
+                              </div>
+                            )}
+
+                            {msg.role === 'ai' && 'content' in msg && msg.content && !msg.content.irac && 'text' in msg.content && (
+                              <div className="small text-body-secondary">
+                                {(msg.content.text as string).split('\n').map((line, li) => (
+                                  <p key={li} className={`mb-1 ${line.startsWith('**') ? 'fw-bold text-heading mt-2' : line.startsWith('📌') ? 'text-primary fw-bold mt-2' : ''}`}>
+                                    {line.replace(/\*\*/g, '')}
+                                  </p>
                                 ))}
                               </div>
-                            </div>
-                            <div>
-                              <span className="text-xs font-bold text-[#28C76F] uppercase">Conclusion</span>
-                              <p className="mt-0.5">{msg.content.conclusion}</p>
-                            </div>
+                            )}
+
+                            {msg.role === 'ai' && 'content' in msg && msg.content && (
+                              <div className="mt-3 pt-3 border-top d-flex flex-wrap gap-2">
+                                {msg.content.sections?.map(s => (
+                                  <span key={s} className="badge bg-label-primary extra-small px-2">{s}</span>
+                                ))}
+                                {'caseLaws' in msg.content && msg.content.caseLaws?.map(c => (
+                                  <span key={c} className="badge bg-label-success extra-small px-2">{c}</span>
+                                ))}
+                              </div>
+                            )}
                           </div>
-                        </>
-                      )}
-                      {'content' in msg && msg.content && !msg.content.irac && 'text' in msg.content && (
-                        <div className="p-4 text-sm text-[#4B465C] space-y-1">
-                          {(msg.content.text as string).split('\n').map((line, li) => (
-                            <p key={li} className={line.startsWith('**') ? 'font-semibold text-[#4B465C]' : line.startsWith('📌') ? 'text-[#7367F0] font-medium' : ''}>{line.replace(/\*\*/g, '')}</p>
-                          ))}
+                        </div>
+                        <div className={`mt-1 extra-small text-body-secondary ${msg.role === 'student' ? 'text-end' : ''}`}>
+                          {msg.time}
+                        </div>
+                      </div>
+
+                      {msg.role === 'student' && (
+                        <div className="avatar avatar-sm flex-shrink-0 mt-1">
+                          <span className="avatar-initial rounded-circle bg-label-primary fw-bold">A</span>
                         </div>
                       )}
-
-                      {/* Section chips + case laws */}
-                      {'content' in msg && msg.content && (
-                        <div className="px-4 pb-3 pt-1 border-t border-[#DBDADE] flex flex-wrap gap-1.5">
-                          {msg.content.sections?.map(s => (
-                            <span key={s} className="text-xs bg-[#7367F0]/10 text-[#7367F0] px-2 py-0.5 rounded-full font-medium">{s}</span>
-                          ))}
-                          {'caseLaws' in msg.content && msg.content.caseLaws?.map(c => (
-                            <span key={c} className="text-xs bg-[#28C76F]/10 text-[#28C76F] px-2 py-0.5 rounded-full font-medium">{c}</span>
-                          ))}
-                        </div>
-                      )}
-
-                      <div className="px-4 pb-2 text-[10px] text-[#A8AAAE]">{msg.time}</div>
                     </div>
-                  )}
-                </div>
-
-                {msg.role === 'student' && (
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#7367F0] to-[#9E95F5] flex items-center justify-center text-white text-xs font-bold flex-shrink-0 ml-3 mt-1">
-                    A
                   </div>
-                )}
-              </div>
-            ))}
-
-            {/* Typing indicator */}
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-[#7367F0] flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
-                AI
-              </div>
-              <div className="bg-white border border-[#DBDADE] shadow-sm rounded-2xl rounded-tl-sm px-4 py-3">
-                <div className="flex gap-1.5 items-center">
-                  {[0, 1, 2].map(i => (
-                    <div
-                      key={i}
-                      className="w-2 h-2 bg-[#A8AAAE] rounded-full"
-                      style={{ opacity: i === 0 ? 1 : i === 1 ? 0.7 : 0.4 }}
-                    />
-                  ))}
-                </div>
+                ))}
               </div>
             </div>
-          </div>
 
-          {/* Quick action chips */}
-          <div className="px-5 pb-2 flex gap-2 flex-wrap">
-            {['Explain simply', 'Practice question', 'Key cases', 'Draft argument', 'Memory tips'].map(chip => (
-              <button
-                key={chip}
-                className="px-3 py-1.5 bg-white border border-[#DBDADE] text-[#4B465C] text-xs font-medium rounded-full hover:border-[#7367F0] hover:text-[#7367F0] transition"
-              >
-                {chip}
-              </button>
-            ))}
-          </div>
+            {/* Footer / Input */}
+            <div className="p-4 border-top">
+              {/* Quick action chips */}
+              <div className="d-flex gap-2 flex-wrap mb-3">
+                {['Explain simply', 'Practice question', 'Key cases', 'Draft argument'].map(chip => (
+                  <button key={chip} className="btn btn-sm btn-outline-secondary rounded-pill extra-small px-3 py-1">
+                    {chip}
+                  </button>
+                ))}
+              </div>
 
-          {/* Input bar */}
-          <div className="px-5 pb-4">
-            <div className="bg-white border border-[#DBDADE] rounded-xl shadow-sm overflow-hidden">
-              <textarea
-                className="w-full px-4 pt-3 pb-2 text-sm text-[#4B465C] placeholder:text-[#A8AAAE] focus:outline-none resize-none"
-                rows={2}
-                placeholder="Ask anything about criminal law... e.g. 'Explain the doctrine of mens rea in IPC'"
-              />
-              <div className="flex items-center gap-2 px-4 pb-3">
-                <span className="text-xs text-[#A8AAAE]">0 / 2000 chars</span>
-                <span className="text-xs text-[#A8AAAE]">·</span>
-                <span className="text-xs text-[#A8AAAE]">3,400 / 10,000 tokens used today</span>
-                <button className="ml-auto flex items-center gap-2 px-4 py-2 bg-[#7367F0] hover:bg-[#5E50E2] text-white text-sm font-semibold rounded-lg transition">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 rotate-90" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                  </svg>
-                  Send
-                </button>
+              <div className="card shadow-none border">
+                <div className="card-body p-2">
+                  <textarea
+                    className="form-control border-0 shadow-none py-2 px-3 small"
+                    rows={2}
+                    placeholder="Ask anything about criminal law... e.g. 'Explain the doctrine of mens rea'"
+                  ></textarea>
+                  <div className="d-flex align-items-center justify-content-between mt-2 px-2 pb-1">
+                    <div className="d-flex align-items-center gap-2">
+                      <i className="ti tabler-typography fs-6 text-body-secondary cursor-pointer hover-text-primary"></i>
+                      <i className="ti tabler-paperclip fs-6 text-body-secondary cursor-pointer hover-text-primary"></i>
+                      <span className="text-body-secondary extra-small ms-2">0 / 2000</span>
+                    </div>
+                    <button className="btn btn-primary btn-sm px-4 d-flex align-items-center gap-2">
+                      <span>Send</span>
+                      <i className="ti tabler-send fs-6"></i>
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </StudentLayout>
-  )
+  );
 }

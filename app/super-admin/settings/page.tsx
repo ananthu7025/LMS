@@ -2,7 +2,13 @@
 import { useState } from 'react';
 import SuperAdminLayout from '@/components/layouts/SuperAdminLayout';
 
-const tabs = ['Branding', 'Email Templates', 'Feature Flags', 'Security'];
+const tabs = [
+  { id: 0, label: 'Branding',       icon: 'tabler-palette' },
+  { id: 1, label: 'Email Templates', icon: 'tabler-mail' },
+  { id: 2, label: 'Feature Flags',   icon: 'tabler-flag' },
+  { id: 3, label: 'Security',        icon: 'tabler-lock' },
+];
+
 const emailTemplates = ['Welcome (Institute)', 'Welcome (Student)', 'Payment Confirmation', 'Password Reset', 'Enrollment Confirmation'];
 
 export default function SettingsPage() {
@@ -11,132 +17,190 @@ export default function SettingsPage() {
 
   return (
     <SuperAdminLayout active="/super-admin/settings" title="Platform Settings" breadcrumb="Home / Settings">
+      
       {/* Tabs */}
-      <div style={{ display: 'flex', gap: 4, marginBottom: 24, background: '#fff', padding: 6, borderRadius: 10, border: '1px solid var(--border)', width: 'fit-content' }}>
-        {tabs.map((t, i) => (
-          <button key={t} onClick={() => setTab(i)} style={{ padding: '8px 20px', borderRadius: 8, border: 'none', background: tab === i ? 'var(--primary)' : 'transparent', color: tab === i ? '#fff' : 'var(--text-muted)', fontWeight: 600, fontSize: 13.5, cursor: 'pointer', transition: 'all 0.15s' }}>{t}</button>
-        ))}
-      </div>
-
-      {tab === 0 && (
-        <div className="card" style={{ padding: 28, maxWidth: 720 }}>
-          <h3 style={{ fontWeight: 700, fontSize: 16, marginBottom: 20 }}>🎨 Branding Settings</h3>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
-            <div>
-              <label className="form-label">Platform Name</label>
-              <input className="form-input" defaultValue="LexEd" />
-            </div>
-            <div>
-              <label className="form-label">Primary Color</label>
-              <div style={{ display: 'flex', gap: 10 }}>
-                <input type="color" defaultValue="#7367F0" style={{ width: 48, height: 42, border: '1px solid var(--border)', borderRadius: 8, padding: 4, cursor: 'pointer' }} />
-                <input className="form-input" defaultValue="#7367F0" />
-              </div>
-            </div>
-            <div>
-              <label className="form-label">Platform Logo</label>
-              <div style={{ border: '2px dashed var(--border)', borderRadius: 10, padding: '20px', textAlign: 'center', cursor: 'pointer', background: '#fafafa' }}>
-                <div style={{ fontSize: 24, marginBottom: 6 }}>⚖️</div>
-                <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>Drop file or <span style={{ color: 'var(--primary)' }}>browse</span><br />PNG or SVG, max 2MB</div>
-              </div>
-            </div>
-            <div>
-              <label className="form-label">Favicon</label>
-              <div style={{ border: '2px dashed var(--border)', borderRadius: 10, padding: '20px', textAlign: 'center', cursor: 'pointer', background: '#fafafa' }}>
-                <div style={{ fontSize: 24, marginBottom: 6 }}>🖼️</div>
-                <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>Drop file or <span style={{ color: 'var(--primary)' }}>browse</span><br />ICO or PNG 32×32</div>
-              </div>
-            </div>
-          </div>
-          <div style={{ marginTop: 24, display: 'flex', gap: 10 }}>
-            <button className="btn-primary">Save Changes</button>
-            <button className="btn-outline">Preview</button>
-          </div>
-        </div>
-      )}
-
-      {tab === 1 && (
-        <div className="card" style={{ padding: 28, maxWidth: 860 }}>
-          <h3 style={{ fontWeight: 700, fontSize: 16, marginBottom: 16 }}>📧 Email Templates</h3>
-          <div style={{ display: 'flex', gap: 20 }}>
-            <div style={{ width: 220, flexShrink: 0 }}>
-              {emailTemplates.map((t, i) => (
-                <div key={t} onClick={() => setEmailTab(i)} style={{ padding: '10px 14px', borderRadius: 8, marginBottom: 4, cursor: 'pointer', background: emailTab === i ? 'var(--primary-light)' : 'transparent', color: emailTab === i ? 'var(--primary)' : 'var(--text-muted)', fontWeight: emailTab === i ? 600 : 400, fontSize: 13, borderLeft: emailTab === i ? '3px solid var(--primary)' : '3px solid transparent' }}>
-                  {t}
-                </div>
-              ))}
-            </div>
-            <div style={{ flex: 1 }}>
-              <div style={{ marginBottom: 16 }}>
-                <label className="form-label">Subject Line</label>
-                <input className="form-input" defaultValue={`Welcome to LexEd — Your Institute is Ready! 🎉`} />
-              </div>
-              <div>
-                <label className="form-label">Email Body <span style={{ color: 'var(--text-muted)', fontWeight: 400 }}>(Merge tags: {'{{institute_name}}'}, {'{{owner_name}}'}, {'{{login_url}}'})</span></label>
-                <textarea className="form-input" style={{ height: 220, resize: 'vertical', fontFamily: 'monospace', fontSize: 13, lineHeight: 1.6 }} defaultValue={`Hi {{owner_name}},\n\nCongratulations! Your institute "{{institute_name}}" has been approved and is now live on LexEd.\n\n🔗 Your dashboard: {{login_url}}\n📧 Login email: {{admin_email}}\n🔑 Temporary password: {{temp_password}}\n\nWe recommend completing the setup wizard to publish your first course.\n\nWarm regards,\nThe LexEd Team`} />
-              </div>
-              <div style={{ marginTop: 14, display: 'flex', gap: 10 }}>
-                <button className="btn-primary">Save Template</button>
-                <button className="btn-outline">📬 Send Test Email</button>
-                <button className="btn-outline">Reset to Default</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {tab === 2 && (
-        <div className="card" style={{ padding: 28, maxWidth: 640 }}>
-          <h3 style={{ fontWeight: 700, fontSize: 16, marginBottom: 20 }}>🚩 Feature Flags</h3>
-          {[
-            { label: 'AI Features (AI Tutor, IRAC Checker)', desc: 'Enables AI chat, PDF analysis, and quiz generation for all institutes', on: true },
-            { label: 'Legal Practice Lab', desc: 'Case Drafting, Moot Court, Client Interview modules', on: true },
-            { label: 'Live Classes', desc: 'Zoom integration and built-in live class rooms', on: true },
-            { label: '🔴 Maintenance Mode', desc: 'Shows maintenance page to all users. Use carefully.', on: false },
-          ].map(f => (
-            <div key={f.label} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 0', borderBottom: '1px solid var(--border)' }}>
-              <div>
-                <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-primary)', marginBottom: 3 }}>{f.label}</div>
-                <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>{f.desc}</div>
-              </div>
-              <div className={`toggle ${f.on ? '' : 'off'}`} style={{ flexShrink: 0 }} />
-            </div>
+      <div className="nav-align-top mb-4">
+        <ul className="nav nav-pills mb-3" role="tablist">
+          {tabs.map((t) => (
+            <li key={t.id} className="nav-item">
+              <button
+                type="button"
+                className={`nav-link ${tab === t.id ? 'active' : ''}`}
+                onClick={() => setTab(t.id)}
+              >
+                <i className={`ti ${t.icon} me-1`}></i> {t.label}
+              </button>
+            </li>
           ))}
-        </div>
-      )}
+        </ul>
 
-      {tab === 3 && (
-        <div className="card" style={{ padding: 28, maxWidth: 640 }}>
-          <h3 style={{ fontWeight: 700, fontSize: 16, marginBottom: 20 }}>🔒 Security Settings</h3>
-          <div style={{ display: 'grid', gap: 20 }}>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
-              <div>
-                <label className="form-label">Session Timeout (minutes)</label>
-                <input className="form-input" type="number" defaultValue={60} />
-              </div>
-              <div>
-                <label className="form-label">Max Login Attempts Before Lockout</label>
-                <input className="form-input" type="number" defaultValue={5} />
+        <div className="tab-content p-0 bg-transparent border-0 shadow-none">
+          {tab === 0 && (
+            <div className="card">
+              <div className="card-body">
+                <h5 className="card-title fw-bold mb-4">
+                  <i className="ti tabler-palette me-2 text-primary"></i>Platform Branding
+                </h5>
+                <div className="row g-4">
+                  <div className="col-md-6">
+                    <label className="form-label">Platform Name</label>
+                    <input className="form-control" defaultValue="LexEd" />
+                  </div>
+                  <div className="col-md-6">
+                    <label className="form-label">Primary Theme Color</label>
+                    <div className="input-group">
+                      <input type="color" className="form-control form-control-color" defaultValue="#7367F0" style={{ maxWidth: 60 }} />
+                      <input className="form-control" defaultValue="#7367F0" />
+                    </div>
+                  </div>
+                  <div className="col-md-6">
+                    <label className="form-label">Platform Logo</label>
+                    <div className="border border-dashed rounded-3 p-4 text-center bg-light" style={{ cursor: 'pointer' }}>
+                      <i className="ti tabler-upload text-body-secondary fs-2 mb-2"></i>
+                      <div className="small fw-medium">Upload PNG or SVG (max 2MB)</div>
+                      <small className="text-body-secondary">Recommended: 200x50px</small>
+                    </div>
+                  </div>
+                  <div className="col-md-6">
+                    <label className="form-label">Favicon</label>
+                    <div className="border border-dashed rounded-3 p-4 text-center bg-light" style={{ cursor: 'pointer' }}>
+                      <i className="ti tabler-photo-plus text-body-secondary fs-2 mb-2"></i>
+                      <div className="small fw-medium">Upload ICO or PNG</div>
+                      <small className="text-body-secondary">32x32px or 16x16px</small>
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-4 pt-2 d-flex gap-2">
+                  <button className="btn btn-primary">Save Branding</button>
+                  <button className="btn btn-outline-secondary">Preview Changes</button>
+                </div>
               </div>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 0', borderBottom: '1px solid var(--border)' }}>
-              <div>
-                <div style={{ fontSize: 14, fontWeight: 600, marginBottom: 3 }}>Force 2FA for Institute Admins</div>
-                <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>All institute admins must set up two-factor authentication</div>
+          )}
+
+          {tab === 1 && (
+            <div className="card">
+              <div className="card-body">
+                <h5 className="card-title fw-bold mb-4">
+                  <i className="ti tabler-mail me-2 text-primary"></i>Email Templates
+                </h5>
+                <div className="row g-4">
+                  <div className="col-md-4 col-xl-3 border-end">
+                    <div className="nav nav-pills flex-column gap-2">
+                      {emailTemplates.map((t, i) => (
+                        <button
+                          key={t}
+                          className={`nav-link text-start ${emailTab === i ? 'active' : 'bg-label-primary'}`}
+                          onClick={() => setEmailTab(i)}
+                        >
+                          {t}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="col-md-8 col-xl-9">
+                    <div className="mb-4">
+                      <label className="form-label">Subject Line</label>
+                      <input className="form-control" defaultValue="Welcome to LexEd — Your Institute is Ready! 🎉" />
+                    </div>
+                    <div className="mb-4">
+                      <label className="form-label d-flex justify-content-between">
+                        Email Body
+                        <small className="text-body-secondary fw-normal">Merge tags: {'{{institute_name}}'}, {'{{owner_name}}'}</small>
+                      </label>
+                      <textarea
+                        className="form-control"
+                        style={{ height: 220, fontFamily: 'monospace', fontSize: '0.875rem' }}
+                        defaultValue={`Hi {{owner_name}},\n\nCongratulations! Your institute "{{institute_name}}" has been approved and is now live on LexEd.\n\n🔗 Your dashboard: {{login_url}}\n📧 Login email: {{admin_email}}\n🔑 Temporary password: {{temp_password}}\n\nWarm regards,\nThe LexEd Team`}
+                      />
+                    </div>
+                    <div className="d-flex gap-2">
+                      <button className="btn btn-primary">Save Template</button>
+                      <button className="btn btn-outline-secondary">
+                        <i className="ti tabler-send me-1"></i>Send Test
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className="toggle" />
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 0' }}>
-              <div>
-                <div style={{ fontSize: 14, fontWeight: 600, marginBottom: 3 }}>CAPTCHA on Login After 3 Failed Attempts</div>
-                <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>Applies to all user types (Super Admin, Admin, Tutor, Student)</div>
+          )}
+
+          {tab === 2 && (
+            <div className="card">
+              <div className="card-body">
+                <h5 className="card-title fw-bold mb-3">
+                  <i className="ti tabler-flag me-2 text-primary"></i>Feature Flags
+                </h5>
+                <p className="text-body-secondary mb-4">Enable or disable high-level platform features globally.</p>
+                <div className="list-group list-group-flush">
+                  {[
+                    { label: 'AI Features (AI Tutor, IRAC Checker)', desc: 'Enables AI chat, PDF analysis, and quiz generation', on: true },
+                    { label: 'Legal Practice Lab', desc: 'Case Drafting, Moot Court, Client Interview modules', on: true },
+                    { label: 'Live Classes', desc: 'Zoom integration and built-in live rooms', on: true },
+                    { label: '🔴 Maintenance Mode', desc: 'Shows maintenance page to all users globally', on: false },
+                  ].map((f, i) => (
+                    <div key={i} className="list-group-item d-flex align-items-center justify-content-between px-0 py-3">
+                      <div>
+                        <div className="fw-semibold mb-1">{f.label}</div>
+                        <small className="text-body-secondary">{f.desc}</small>
+                      </div>
+                      <div className="form-check form-switch ms-3">
+                        <input className="form-check-input" type="checkbox" defaultChecked={f.on} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
-              <div className="toggle" />
             </div>
-          </div>
-          <button className="btn-primary" style={{ marginTop: 20 }}>Save Security Settings</button>
+          )}
+
+          {tab === 3 && (
+            <div className="card">
+              <div className="card-body">
+                <h5 className="card-title fw-bold mb-4">
+                  <i className="ti tabler-lock me-2 text-primary"></i>Security Settings
+                </h5>
+                <div className="row g-4">
+                  <div className="col-md-6">
+                    <label className="form-label">Session Timeout (minutes)</label>
+                    <input className="form-control" type="number" defaultValue={60} />
+                  </div>
+                  <div className="col-md-6">
+                    <label className="form-label">Max Login Attempts</label>
+                    <input className="form-control" type="number" defaultValue={5} />
+                  </div>
+                  <div className="col-12 py-2 border-bottom">
+                    <div className="d-flex align-items-center justify-content-between">
+                      <div>
+                        <div className="fw-semibold">Two-Factor Authentication (2FA)</div>
+                        <small className="text-body-secondary">Mandatory 2FA for all platform administrators</small>
+                      </div>
+                      <div className="form-check form-switch">
+                        <input className="form-check-input" type="checkbox" defaultChecked />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-12 py-2 border-bottom">
+                    <div className="d-flex align-items-center justify-content-between">
+                      <div>
+                        <div className="fw-semibold">CAPTCHA Protection</div>
+                        <small className="text-body-secondary">Enable ReCaptcha after 3 failed login attempts</small>
+                      </div>
+                      <div className="form-check form-switch">
+                        <input className="form-check-input" type="checkbox" defaultChecked />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-4 pt-2">
+                  <button className="btn btn-primary text-nowrap">Update Security</button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
-      )}
+      </div>
     </SuperAdminLayout>
   );
 }

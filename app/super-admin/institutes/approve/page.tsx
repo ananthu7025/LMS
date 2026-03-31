@@ -7,106 +7,166 @@ export default function ApproveInstitutePage() {
 
   return (
     <SuperAdminLayout active="/super-admin/institutes" title="Approve New Institute" breadcrumb="Home / Institutes / Approve">
-      <div style={{ maxWidth: 800, margin: '0 auto' }}>
-        {/* Progress indicator */}
-        <div style={{ display: 'flex', gap: 8, marginBottom: 24 }}>
+      <div className="container-xxl p-0" style={{ maxWidth: 900 }}>
+        
+        {/* Progress / Selection strip */}
+        <div className="d-flex flex-nowrap overflow-auto gap-2 mb-4 pb-2">
           {['Krishna Law Academy', 'Delhi Moot Society', 'LegalPro Academy', '4 more...'].map((name, i) => (
-            <div key={i} style={{ flex: i === 0 ? 2 : 1, padding: '8px 12px', borderRadius: 8, background: i === 0 ? 'var(--primary-light)' : '#f3f3f5', border: i === 0 ? '1px solid var(--primary)' : '1px solid var(--border)', fontSize: 12, fontWeight: i === 0 ? 600 : 400, color: i === 0 ? 'var(--primary)' : 'var(--text-muted)', textAlign: 'center', cursor: 'pointer' }}>
-              {i === 0 ? '👁️ Reviewing: ' : ''}{name}
+            <div 
+              key={i} 
+              className={`flex-shrink-0 px-3 py-2 rounded border cursor-pointer small ${i === 0 ? 'bg-label-primary border-primary fw-bold' : 'bg-card border-secondary opacity-75'}`}
+              style={{ minWidth: 160 }}
+            >
+              {i === 0 ? <i className="ti tabler-eye me-1"></i> : ''}{name}
             </div>
           ))}
         </div>
 
-        {/* Application card */}
-        <div className="card" style={{ padding: 28, marginBottom: 20 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 24, paddingBottom: 20, borderBottom: '1px solid var(--border)' }}>
-            <div style={{ width: 56, height: 56, borderRadius: 12, background: 'var(--primary-light)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 24 }}>🏛️</div>
-            <div>
-              <h2 style={{ fontSize: 20, fontWeight: 700, marginBottom: 4 }}>Krishna Law Academy</h2>
-              <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>Application received: March 27, 2025 at 3:14 PM</div>
-            </div>
-            <span className="badge badge-warning" style={{ marginLeft: 'auto', fontSize: 13, padding: '4px 14px' }}>Pending Review</span>
-          </div>
-
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
-            <div>
-              <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 12 }}>📋 Application Details</div>
-              {[
-                ['Institute Name', 'Krishna Law Academy'],
-                ['Type', 'Coaching Centre'],
-                ['Owner Name', 'Sunita Verma'],
-                ['Email', 'sunita@krishnalaw.in'],
-                ['Phone', '+91 99887 65432'],
-                ['City', 'Hyderabad, Telangana'],
-                ['Expected Students', '~200 (first year)'],
-                ['Plan Selected', 'Growth (₹4,999/mo)'],
-              ].map(([k, v]) => (
-                <div key={k as string} style={{ display: 'flex', marginBottom: 10 }}>
-                  <span style={{ width: 160, fontSize: 12, color: 'var(--text-muted)', flexShrink: 0 }}>{k as string}</span>
-                  <span style={{ fontSize: 13, fontWeight: 500 }}>{v as string}</span>
+        {/* Application details card */}
+        <div className="card mb-4">
+          <div className="card-body">
+            <div className="d-flex align-items-center gap-3 mb-4 border-bottom pb-4">
+              <div className="avatar avatar-xl bg-label-primary rounded">
+                <span className="avatar-initial rounded">
+                  <i className="ti tabler-building fs-1"></i>
+                </span>
+              </div>
+              <div className="flex-grow-1">
+                <h4 className="fw-bold mb-1">Krishna Law Academy</h4>
+                <div className="text-body-secondary small">
+                  <i className="ti tabler-calendar me-1"></i>Applied: March 27, 2025 at 3:14 PM
                 </div>
-              ))}
+              </div>
+              <span className="badge bg-label-warning text-uppercase">Pending Review</span>
             </div>
-            <div>
-              <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 12 }}>🔍 Verification Info</div>
-              {[
-                ['GST Number', '36AAXPV1234F1ZX ✓'],
-                ['Website', 'krishnalaw.in'],
-                ['Social Link', 'instagram.com/krishnalaw'],
-              ].map(([k, v]) => (
-                <div key={k as string} style={{ display: 'flex', marginBottom: 10 }}>
-                  <span style={{ width: 140, fontSize: 12, color: 'var(--text-muted)', flexShrink: 0 }}>{k as string}</span>
-                  <span style={{ fontSize: 13, fontWeight: 500, color: 'var(--success)' }}>{v as string}</span>
-                </div>
-              ))}
 
-              <div style={{ marginTop: 24, padding: 16, background: '#f8f7fa', borderRadius: 10 }}>
-                <div style={{ fontSize: 12, fontWeight: 700, marginBottom: 8 }}>Admin Notes (internal)</div>
-                <textarea className="form-input" style={{ height: 80, resize: 'none', background: '#fff', fontSize: 13 }} placeholder="Add internal notes about this application..." defaultValue="GST verified. Social presence looks legitimate. Founder has 8 years coaching experience." />
+            <div className="row g-4">
+              <div className="col-md-7">
+                <h6 className="fw-bold mb-3">
+                  <i className="ti tabler-list-details me-2 text-primary"></i>Application Details
+                </h6>
+                <div className="row g-2">
+                  {[
+                    ['Institute Name', 'Krishna Law Academy'],
+                    ['Institute Type', 'Coaching Centre'],
+                    ['Founder Name', 'Sunita Verma'],
+                    ['Official Email', 'sunita@krishnalaw.in'],
+                    ['Contact Phone', '+91 99887 65432'],
+                    ['Location', 'Hyderabad, Telangana'],
+                    ['Approx. Students', '~200 (first year)'],
+                    ['Target Plan', 'Growth (₹4,999/mo)'],
+                  ].map(([k, v]) => (
+                    <div key={k as string} className="col-12 d-flex">
+                      <span className="text-body-secondary small w-px-150">{k as string}</span>
+                      <span className="fw-medium small">{v as string}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="col-md-5">
+                <h6 className="fw-bold mb-3">
+                  <i className="ti tabler-shield-check me-2 text-success"></i>Verification Data
+                </h6>
+                <div className="mb-4">
+                  {[
+                    ['GST Number', '36AAXPV1234F1ZX', true],
+                    ['Official Website', 'krishnalaw.in', true],
+                    ['Social Link', 'instagram.com/krishnalaw', true],
+                  ].map(([k, v, verified]) => (
+                    <div key={k as string} className="d-flex justify-content-between mb-2">
+                      <span className="text-body-secondary small">{k as string}</span>
+                      <span className={`small fw-bold ${verified ? 'text-success' : ''}`}>
+                        {v as string} {verified && <i className="ti tabler-check"></i>}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="bg-label-secondary rounded p-3">
+                  <label className="form-label fw-bold small text-dark mb-2">Internal Admin Notes</label>
+                  <textarea 
+                    className="form-control form-control-sm bg-white border-0" 
+                    rows={3} 
+                    placeholder="Notes for internal team..."
+                    defaultValue="GST verified. Social presence looks legitimate. Founder has 8 years coaching experience."
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Action Panels */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16, marginBottom: 20 }}>
-          <div className="card" style={{ padding: 20, border: action === 'approve' ? '2px solid var(--success)' : '1px solid var(--border)', cursor: 'pointer' }} onClick={() => setAction('approve')}>
-            <div style={{ fontSize: 20, marginBottom: 8 }}>✅</div>
-            <div style={{ fontWeight: 700, color: 'var(--success)', marginBottom: 6 }}>Approve</div>
-            <div style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.5 }}>Send welcome email with login credentials. Activate institute immediately.</div>
+        {/* Action Panel */}
+        <div className="row g-3 mb-4">
+          {[
+            { id: 'approve', icon: 'tabler-circle-check', color: 'success', label: 'Approve', desc: 'Activate institute and send credentials.' },
+            { id: 'reject',  icon: 'tabler-circle-x',     color: 'danger',  label: 'Reject',  desc: 'Deny application and send reason.' },
+            { id: 'info',    icon: 'tabler-message-dots', color: 'info',    label: 'Request Info', desc: 'Ask for more docs or clarification.' },
+          ].map((a) => (
+            <div key={a.id} className="col-md-4">
+              <div 
+                className={`card cursor-pointer border-2 transition-all ${action === a.id ? `border-${a.color} shadow-sm` : 'border-transparent'}`} 
+                onClick={() => setAction(a.id as any)}
+              >
+                <div className="card-body text-center py-4">
+                  <div className={`avatar avatar-md bg-label-${a.color} mx-auto mb-3`}>
+                    <span className="avatar-initial rounded">
+                      <i className={`ti ${a.icon} fs-3`}></i>
+                    </span>
+                  </div>
+                  <h6 className={`fw-bold text-${a.color} mb-2`}>{a.label}</h6>
+                  <p className="text-body-secondary small mb-0 px-2">{a.desc}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Dynamic Action Content */}
+        {action && (
+          <div className="card mb-4 border border-light">
+            <div className="card-body">
+              {action === 'reject' && (
+                <div className="mb-0">
+                  <label className="form-label fw-bold text-danger">Reason for Rejection (required)</label>
+                  <textarea className="form-control" rows={3} placeholder="Please explain why the application is being rejected..." />
+                </div>
+              )}
+              {action === 'info' && (
+                <div className="mb-0">
+                  <label className="form-label fw-bold text-info">Inquiry Message</label>
+                  <textarea className="form-control" rows={3} defaultValue="Hi Sunita, thank you for applying to LexEd. Could you please share a copy of your GST certificate and any faculty credentials for verification?" />
+                </div>
+              )}
+              {action === 'approve' && (
+                <div className="mb-0">
+                  <div className="alert bg-label-success d-flex align-items-center mb-0">
+                    <i className="ti tabler-circle-check me-2 fs-4"></i>
+                    <div>
+                      Approving will immediately create the institute account and send an email with login credentials to <strong>sunita@krishnalaw.in</strong>.
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
-          <div className="card" style={{ padding: 20, border: action === 'reject' ? '2px solid var(--error)' : '1px solid var(--border)', cursor: 'pointer' }} onClick={() => setAction('reject')}>
-            <div style={{ fontSize: 20, marginBottom: 8 }}>❌</div>
-            <div style={{ fontWeight: 700, color: 'var(--error)', marginBottom: 6 }}>Reject</div>
-            <div style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.5 }}>Send rejection email with reason. Applicant can re-apply after 30 days.</div>
-          </div>
-          <div className="card" style={{ padding: 20, border: action === 'info' ? '2px solid var(--info)' : '1px solid var(--border)', cursor: 'pointer' }} onClick={() => setAction('info')}>
-            <div style={{ fontSize: 20, marginBottom: 8 }}>💬</div>
-            <div style={{ fontWeight: 700, color: 'var(--info)', marginBottom: 6 }}>Request Info</div>
-            <div style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.5 }}>Send a custom message asking for additional documents or clarification.</div>
+        )}
+
+        {/* Footer Actions */}
+        <div className="d-flex justify-content-between align-items-center">
+          <a href="/super-admin/institutes" className="btn btn-outline-secondary">
+            <i className="ti tabler-arrow-left me-1"></i>Back to List
+          </a>
+          <div className="d-flex gap-2">
+            <button className="btn btn-text-secondary">Skip → Next Pending</button>
+            {action && (
+              <button className={`btn btn-${action === 'approve' ? 'success' : action === 'reject' ? 'danger' : 'info'}`}>
+                {action === 'approve' ? 'Confirm Approval' : action === 'reject' ? 'Send Rejection' : 'Request Info'}
+              </button>
+            )}
           </div>
         </div>
 
-        {action === 'reject' && (
-          <div className="card" style={{ padding: 20, marginBottom: 16, border: '1px solid var(--error)' }}>
-            <label className="form-label">Rejection Reason (required — will be sent to applicant)</label>
-            <textarea className="form-input" style={{ height: 80, resize: 'none' }} placeholder="e.g. Unable to verify GST number. Please re-apply with valid registration documents." />
-          </div>
-        )}
-        {action === 'info' && (
-          <div className="card" style={{ padding: 20, marginBottom: 16, border: '1px solid var(--info)' }}>
-            <label className="form-label">Custom Message to Applicant</label>
-            <textarea className="form-input" style={{ height: 80, resize: 'none' }} defaultValue="Hi Sunita, thank you for applying to LexEd. Could you please share a copy of your GST certificate and any faculty credentials for verification?" />
-          </div>
-        )}
-
-        <div style={{ display: 'flex', gap: 12, justifyContent: 'flex-end' }}>
-          <a href="/super-admin/institutes"><button className="btn-outline">← Back to List</button></a>
-          {action === 'approve' && <button className="btn-primary" style={{ background: 'var(--success)', display: 'flex', alignItems: 'center', gap: 6 }}>✅ Confirm Approval & Send Email</button>}
-          {action === 'reject' && <button className="btn-primary" style={{ background: 'var(--error)', display: 'flex', alignItems: 'center', gap: 6 }}>❌ Send Rejection Email</button>}
-          {action === 'info' && <button className="btn-primary" style={{ background: 'var(--info)', display: 'flex', alignItems: 'center', gap: 6 }}>💬 Send Message</button>}
-          <button className="btn-outline" style={{ color: 'var(--text-muted)' }}>Skip → Next Pending</button>
-        </div>
       </div>
     </SuperAdminLayout>
   );
