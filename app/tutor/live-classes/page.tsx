@@ -1,50 +1,42 @@
 'use client';
 import { useState } from 'react';
-import AdminLayout from '@/components/layouts/AdminLayout';
+import TutorLayout from '@/components/layouts/TutorLayout';
 
 const classes = [
-  { course: 'Criminal Law Fundamentals', topic: 'Section 302 & Murder — Case Studies',      tutor: 'Anil Kumar',  date: 'Apr 1, 2025',  time: '10:00 AM', duration: '90 min',  students: 124, status: 'Live'      },
-  { course: 'Constitutional Law',         topic: 'Fundamental Rights — Art. 14 to 21',        tutor: 'Priya Nair',  date: 'Apr 2, 2025',  time: '02:00 PM', duration: '60 min',  students: 98,  status: 'Upcoming'  },
-  { course: 'CLAT Preparation',           topic: 'Mock Test Review: March Batch',              tutor: 'Priya Nair',  date: 'Apr 3, 2025',  time: '05:30 PM', duration: '120 min', students: 201, status: 'Upcoming'  },
-  { course: 'Evidence Law',               topic: 'Documentary Evidence — Sections 61–90',      tutor: 'Rajiv Bose',  date: 'Apr 5, 2025',  time: '11:00 AM', duration: '60 min',  students: 76,  status: 'Upcoming'  },
-  { course: 'Contract Law',               topic: 'Offer & Acceptance — Core Principles',        tutor: 'Kiran Patel', date: 'Apr 7, 2025',  time: '03:00 PM', duration: '45 min',  students: 54,  status: 'Upcoming'  },
-  { course: 'Criminal Law Fundamentals', topic: 'Evidence Act: Sections 45–51',               tutor: 'Anil Kumar',  date: 'Mar 28, 2025', time: '10:00 AM', duration: '90 min',  students: 108, status: 'Completed' },
-  { course: 'Constitutional Law',         topic: 'Directive Principles & Fundamental Duties',  tutor: 'Priya Nair',  date: 'Mar 25, 2025', time: '02:00 PM', duration: '60 min',  students: 91,  status: 'Completed' },
-  { course: 'CLAT Preparation',           topic: 'Current Affairs: March 2025 Digest',         tutor: 'Priya Nair',  date: 'Mar 22, 2025', time: '05:00 PM', duration: '45 min',  students: 187, status: 'Completed' },
-  { course: 'Evidence Law',               topic: 'Oral Evidence & Admissibility',               tutor: 'Rajiv Bose',  date: 'Mar 20, 2025', time: '11:00 AM', duration: '60 min',  students: 65,  status: 'Completed' },
+  { course: 'Criminal Law Fundamentals', topic: 'Section 302 & Murder — Case Studies',      date: 'Apr 1, 2025',  time: '10:00 AM', duration: '90 min',  students: 124, status: 'Live'      },
+  { course: 'Criminal Law Fundamentals', topic: 'Mens Rea & Actus Reus — Deep Dive',         date: 'Apr 4, 2025',  time: '10:00 AM', duration: '60 min',  students: 98,  status: 'Upcoming'  },
+  { course: 'CLAT Preparation',           topic: 'Mock Test Review: March Batch',              date: 'Apr 6, 2025',  time: '05:30 PM', duration: '120 min', students: 201, status: 'Upcoming'  },
+  { course: 'Contract Law',               topic: 'Offer & Acceptance — Core Principles',        date: 'Apr 9, 2025',  time: '03:00 PM', duration: '45 min',  students: 54,  status: 'Upcoming'  },
+  { course: 'Criminal Law Fundamentals', topic: 'Evidence Act: Sections 45–51',               date: 'Mar 28, 2025', time: '10:00 AM', duration: '90 min',  students: 108, status: 'Completed' },
+  { course: 'CLAT Preparation',           topic: 'Current Affairs: March 2025 Digest',         date: 'Mar 24, 2025', time: '05:00 PM', duration: '45 min',  students: 187, status: 'Completed' },
+  { course: 'Contract Law',               topic: 'Consideration & Void Agreements',             date: 'Mar 20, 2025', time: '03:00 PM', duration: '60 min',  students: 61,  status: 'Completed' },
 ];
 
 const courseMap: Record<string, { color: string; hex: string }> = {
   'Criminal Law Fundamentals': { color: 'primary', hex: '#7367F0' },
-  'Constitutional Law':         { color: 'info',    hex: '#00BAD1' },
   'CLAT Preparation':           { color: 'success', hex: '#28C76F' },
-  'Evidence Law':               { color: 'warning', hex: '#FF9F43' },
   'Contract Law':               { color: 'danger',  hex: '#FF4C51' },
 };
 
 const initials = (name: string) => name.split(' ').map(n => n[0]).join('');
 
-// Calendar — April 2025 starts Tuesday (offset 2)
 const CAL_OFFSET = 2;
 const CAL_DAYS   = 30;
 const calEvents: Record<number, { label: string; color: string }[]> = {
   1: [{ label: '10AM Criminal Law',  color: 'primary' }],
-  2: [{ label: '2PM Constitutional', color: 'info'    }],
-  3: [{ label: '5:30PM CLAT',        color: 'success' }],
-  5: [{ label: '11AM Evidence Law',  color: 'warning' }],
-  7: [{ label: '3PM Contract Law',   color: 'danger'  }],
+  4: [{ label: '10AM Criminal Law',  color: 'primary' }],
+  6: [{ label: '5:30PM CLAT',        color: 'success' }],
+  9: [{ label: '3PM Contract Law',   color: 'danger'  }],
 };
 
-export default function LiveClassesPage() {
+export default function TutorLiveClassesPage() {
   const [view, setView]                 = useState<'cards' | 'calendar'>('cards');
   const [courseFilter, setCourseFilter] = useState('All');
-  const [tutorFilter, setTutorFilter]   = useState('All');
   const [statusFilter, setStatusFilter] = useState('All');
   const [search, setSearch]             = useState('');
 
   const filtered = classes.filter(c => {
     if (courseFilter !== 'All' && c.course !== courseFilter) return false;
-    if (tutorFilter  !== 'All' && c.tutor  !== tutorFilter)  return false;
     if (statusFilter !== 'All' && c.status !== statusFilter) return false;
     if (search && !c.topic.toLowerCase().includes(search.toLowerCase()) && !c.course.toLowerCase().includes(search.toLowerCase())) return false;
     return true;
@@ -55,15 +47,15 @@ export default function LiveClassesPage() {
   const completed = filtered.filter(c => c.status === 'Completed');
 
   return (
-    <AdminLayout title="Live Classes" breadcrumb="Home / Live Classes">
+    <TutorLayout title="Live Classes" breadcrumb="Home / Live Classes">
 
       {/* ── Stat Cards ────────────────────────────────────────────────── */}
       <div className="row g-6 mb-6">
         {[
-          { label: 'Scheduled This Month', val: '9',  sub: 'April 2025',  icon: 'tabler-calendar',     color: 'primary', change: '+3', changeColor: 'success'   },
+          { label: 'Scheduled This Month', val: '7',  sub: 'April 2025',  icon: 'tabler-calendar',     color: 'primary', change: '+2', changeColor: 'success'   },
           { label: 'Live Now',             val: '1',  sub: 'In progress', icon: 'tabler-radio',        color: 'danger',  change: '',   changeColor: 'secondary' },
-          { label: 'Upcoming',             val: '4',  sub: 'Next 7 days', icon: 'tabler-clock',        color: 'info',    change: '',   changeColor: 'secondary' },
-          { label: 'Completed',            val: '4',  sub: 'This month',  icon: 'tabler-circle-check', color: 'success', change: '+1', changeColor: 'success'   },
+          { label: 'Upcoming',             val: '3',  sub: 'Next 7 days', icon: 'tabler-clock',        color: 'info',    change: '',   changeColor: 'secondary' },
+          { label: 'Completed',            val: '3',  sub: 'This month',  icon: 'tabler-circle-check', color: 'success', change: '+1', changeColor: 'success'   },
         ].map(s => (
           <div key={s.label} className="col-sm-6 col-xl-3">
             <div className="card">
@@ -92,20 +84,11 @@ export default function LiveClassesPage() {
       {/* ── Toolbar ───────────────────────────────────────────────────── */}
       <div className="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-5">
         <div className="d-flex flex-wrap gap-2">
-          <select className="form-select form-select-sm" style={{ width: 180 }} onChange={e => setCourseFilter(e.target.value)}>
+          <select className="form-select form-select-sm" style={{ width: 200 }} onChange={e => setCourseFilter(e.target.value)}>
             <option value="All">All Courses</option>
             <option>Criminal Law Fundamentals</option>
-            <option>Constitutional Law</option>
             <option>CLAT Preparation</option>
-            <option>Evidence Law</option>
             <option>Contract Law</option>
-          </select>
-          <select className="form-select form-select-sm" style={{ width: 150 }} onChange={e => setTutorFilter(e.target.value)}>
-            <option value="All">All Tutors</option>
-            <option>Anil Kumar</option>
-            <option>Priya Nair</option>
-            <option>Rajiv Bose</option>
-            <option>Kiran Patel</option>
           </select>
           <select className="form-select form-select-sm" style={{ width: 140 }} onChange={e => setStatusFilter(e.target.value)}>
             <option value="All">All Status</option>
@@ -127,7 +110,7 @@ export default function LiveClassesPage() {
               <i className="ti tabler-calendar"></i>
             </button>
           </div>
-          <a href="/admin/live-classes/schedule" className="btn btn-sm btn-primary">
+          <a href="/tutor/live-classes/schedule" className="btn btn-sm btn-primary">
             <i className="ti tabler-plus me-1"></i>Schedule Class
           </a>
         </div>
@@ -158,13 +141,11 @@ export default function LiveClassesPage() {
                         overflow: 'hidden',
                       }}
                     >
-                      {/* Decorative circles */}
                       <div style={{ position: 'absolute', top: -40, right: -40, width: 160, height: 160, borderRadius: '50%', background: 'rgba(255,255,255,0.07)', pointerEvents: 'none' }}></div>
                       <div style={{ position: 'absolute', bottom: -60, right: 100, width: 220, height: 220, borderRadius: '50%', background: 'rgba(255,255,255,0.04)', pointerEvents: 'none' }}></div>
                       <div style={{ position: 'absolute', top: '50%', right: 280, width: 80, height: 80, borderRadius: '50%', background: 'rgba(255,255,255,0.05)', pointerEvents: 'none', transform: 'translateY(-50%)' }}></div>
 
                       <div className="row align-items-center g-4 position-relative">
-                        {/* Left — info */}
                         <div className="col-12 col-md">
                           <div className="d-flex align-items-center gap-2 mb-3">
                             <span className="live-dot rounded-circle bg-white d-inline-block"></span>
@@ -194,13 +175,12 @@ export default function LiveClassesPage() {
                               className="d-flex align-items-center justify-content-center rounded-circle fw-bold"
                               style={{ width: 32, height: 32, background: 'rgba(255,255,255,0.2)', color: '#fff', fontSize: 12, flexShrink: 0 }}
                             >
-                              {initials(c.tutor)}
+                              AK
                             </div>
-                            <span style={{ color: 'rgba(255,255,255,0.8)', fontSize: 13 }}>{c.tutor}</span>
+                            <span style={{ color: 'rgba(255,255,255,0.8)', fontSize: 13 }}>Anil Kumar</span>
                           </div>
                         </div>
 
-                        {/* Right — actions */}
                         <div className="col-12 col-md-auto d-flex flex-row flex-md-column align-items-center align-items-md-end gap-3">
                           <div
                             className="rounded-3 text-center"
@@ -213,7 +193,7 @@ export default function LiveClassesPage() {
                             className="btn fw-semibold d-flex align-items-center gap-2"
                             style={{ background: '#fff', color: '#7367F0', minWidth: 130, justifyContent: 'center' }}
                           >
-                            <i className="ti tabler-player-play"></i>Join Now
+                            <i className="ti tabler-player-play"></i>Start Class
                           </button>
                         </div>
                       </div>
@@ -240,7 +220,6 @@ export default function LiveClassesPage() {
                     <div key={i} className="col-sm-6 col-xl-3">
                       <div className="card p-2 h-100 shadow-none border">
 
-                        {/* Thumbnail area */}
                         <div
                           className="rounded-2 d-flex align-items-center justify-content-center overflow-hidden position-relative mb-3"
                           style={{ height: 110, background: `${cm.hex}12` }}
@@ -277,9 +256,9 @@ export default function LiveClassesPage() {
                           <div className="d-flex align-items-center justify-content-between">
                             <div className="d-flex align-items-center gap-2">
                               <div className="avatar avatar-sm">
-                                <span className="avatar-initial rounded-circle bg-label-info" style={{ fontSize: 10 }}>{initials(c.tutor)}</span>
+                                <span className="avatar-initial rounded-circle bg-label-primary" style={{ fontSize: 10 }}>AK</span>
                               </div>
-                              <small className="text-body-secondary">{c.tutor}</small>
+                              <small className="text-body-secondary">Anil Kumar</small>
                             </div>
                             <small className="text-body-secondary d-flex align-items-center gap-1">
                               <i className="ti tabler-users" style={{ fontSize: 12 }}></i>{c.students}
@@ -331,7 +310,6 @@ export default function LiveClassesPage() {
                     <div key={i} className="col-sm-6 col-xl-3">
                       <div className="card p-2 h-100 shadow-none border overflow-hidden">
 
-                        {/* Thin gradient top accent */}
                         <div style={{
                           height: 3,
                           background: `linear-gradient(90deg, ${cm.hex}, ${cm.hex}55)`,
@@ -366,9 +344,9 @@ export default function LiveClassesPage() {
 
                           <div className="d-flex align-items-center gap-2">
                             <div className="avatar avatar-sm">
-                              <span className="avatar-initial rounded-circle bg-label-secondary" style={{ fontSize: 10 }}>{initials(c.tutor)}</span>
+                              <span className="avatar-initial rounded-circle bg-label-secondary" style={{ fontSize: 10 }}>AK</span>
                             </div>
-                            <small className="text-body-secondary">{c.tutor}</small>
+                            <small className="text-body-secondary">Anil Kumar</small>
                           </div>
                         </div>
 
@@ -456,9 +434,8 @@ export default function LiveClassesPage() {
               {[
                 ['bg-label-danger',  'Live Now'],
                 ['bg-label-primary', 'Criminal Law'],
-                ['bg-label-info',    'Constitutional'],
                 ['bg-label-success', 'CLAT Prep'],
-                ['bg-label-warning', 'Evidence Law'],
+                ['bg-label-danger',  'Contract Law'],
               ].map(([cls, label]) => (
                 <div key={label} className="d-flex align-items-center gap-2">
                   <span className={`badge ${cls} rounded-pill`} style={{ width: 10, height: 10, padding: 0 }}></span>
@@ -481,6 +458,6 @@ export default function LiveClassesPage() {
         }
       `}</style>
 
-    </AdminLayout>
+    </TutorLayout>
   );
 }
