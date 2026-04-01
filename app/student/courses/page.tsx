@@ -17,6 +17,7 @@ const courses = [
     price: '₹5,999',
     original: '₹9,999',
     enrolled: true,
+    image: '/img/courses/criminal_law.png',
   },
   {
     id: '2',
@@ -32,6 +33,7 @@ const courses = [
     price: '₹4,999',
     original: '₹7,999',
     enrolled: false,
+    image: '/img/courses/constitutional_law.png',
   },
   {
     id: '3',
@@ -47,6 +49,7 @@ const courses = [
     price: '₹3,999',
     original: '₹5,999',
     enrolled: false,
+    image: '/img/courses/criminal_law.png',
   },
   {
     id: '4',
@@ -62,6 +65,7 @@ const courses = [
     price: '₹8,999',
     original: '₹14,999',
     enrolled: false,
+    image: '/img/courses/exam_prep.png',
   },
   {
     id: '5',
@@ -77,6 +81,7 @@ const courses = [
     price: '₹4,499',
     original: '₹6,999',
     enrolled: false,
+    image: '/img/courses/corporate_law.png',
   },
   {
     id: '6',
@@ -92,6 +97,7 @@ const courses = [
     price: '₹3,499',
     original: '₹5,499',
     enrolled: false,
+    image: '/img/courses/constitutional_law.png',
   },
 ];
 
@@ -177,12 +183,15 @@ export default function CoursesCatalogPage() {
           <div key={course.id} className="col-md-6 col-lg-4">
             <div className="card h-100 overflow-hidden shadow-sm hover-shadow transition-all border-light">
               {/* Thumbnail */}
-              <div className={`${course.colorClass} py-5 position-relative flex-center`} style={{ height: 160 }}>
-                <div className="opacity-25">
-                  <i className="ti tabler-book-2 text-white" style={{ fontSize: 80 }}></i>
-                </div>
+              <div className="position-relative overflow-hidden" style={{ height: 160 }}>
+                <img 
+                  src={course.image as string} 
+                  alt={course.title} 
+                  className="w-100 h-100" 
+                  style={{ objectFit: 'cover' }} 
+                />
                 <div className="position-absolute top-0 end-0 p-3">
-                  <span className="badge bg-white bg-opacity-25 text-white small">
+                  <span className="badge bg-white bg-opacity-25 text-white small backdrop-blur-sm shadow-sm" style={{ backdropFilter: 'blur(4px)' }}>
                     {course.enrolled ? 'Enrolled' : 'New'}
                   </span>
                 </div>
