@@ -41,6 +41,8 @@ export default function RootLayout({
         <link rel="stylesheet" href="/vendor/css/core.css" />
         {/* Demo overrides */}
         <link rel="stylesheet" href="/css/demo.css" />
+        {/* ApexCharts */}
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/apexcharts/dist/apexcharts.min.css" />
       </head>
       <body>
         <ThemeProvider>
