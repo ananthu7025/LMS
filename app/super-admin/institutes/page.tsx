@@ -43,7 +43,7 @@ export default function InstitutesListPage() {
       <div className="row g-6 mb-6">
         {[
           { label: 'Total Institutes', value: '248', change: '+5.1%', pos: true,  sub: 'All time',        icon: 'tabler-building',       color: 'bg-label-primary' },
-          { label: 'Active',           value: '199', change: '+12%',  pos: true,  sub: 'Currently live',  icon: 'tabler-building-check', color: 'bg-label-success' },
+          { label: 'Active',           value: '199', change: '+12%',  pos: true,  sub: 'Currently live',  icon: 'tabler-buildings',      color: 'bg-label-success' },
           { label: 'New This Month',   value: '12',  change: '+42%',  pos: true,  sub: 'March 2025',      icon: 'tabler-building-plus',  color: 'bg-label-info'    },
           { label: 'Pending Review',   value: '7',   change: 'Action',pos: false, sub: 'Awaiting approval',icon: 'tabler-clock',         color: 'bg-label-warning' },
         ].map(s => (

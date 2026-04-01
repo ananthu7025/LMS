@@ -10,59 +10,149 @@ export default function TutorLayout({ children, title, breadcrumb }: {
 }) {
   const { toggleMenu, closeMenu } = useMenu();
 
+  const crumbs = breadcrumb ? breadcrumb.split(' / ') : [];
+
   return (
     <div className="layout-wrapper layout-content-navbar">
       <div className="layout-container">
         <TutorSidebar />
         <div className="layout-page">
+
+          {/* ── Navbar ───────────────────────────────────────────────── */}
           <nav className="layout-navbar container-xxl navbar-detached navbar navbar-expand-xl align-items-center bg-navbar-theme" id="layout-navbar">
+            {/* Mobile menu toggle */}
             <div className="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
               <a className="nav-item nav-link px-0 me-xl-6" href="#" onClick={(e) => { e.preventDefault(); toggleMenu(); }}>
                 <i className="icon-base ti tabler-menu-2 icon-md"></i>
               </a>
             </div>
-            <div className="navbar-nav-right d-flex align-items-center justify-content-between w-100" id="navbar-collapse">
-              <div className="d-flex flex-column">
-                {title && <h4 className="fw-bold mb-0">{title}</h4>}
-                {breadcrumb && (
-                  <nav aria-label="breadcrumb">
-                    <ol className="breadcrumb breadcrumb-style1 mb-0">
-                      {breadcrumb.split(' / ').map((crumb, i, arr) => (
-                        <li key={crumb} className={`breadcrumb-item${i === arr.length - 1 ? ' active' : ''}`}>{crumb}</li>
-                      ))}
-                    </ol>
-                  </nav>
-                )}
-              </div>
-              <ul className="navbar-nav flex-row align-items-center ms-md-auto">
-                <li className="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-2">
-                  <a className="nav-link btn btn-icon btn-text-secondary rounded-pill" href="#" onClick={(e) => e.preventDefault()} data-bs-toggle="dropdown">
-                    <i className="icon-base ti tabler-bell icon-22px"></i>
-                    <span className="badge bg-danger rounded-pill badge-notifications">3</span>
+
+            <div className="navbar-nav-right d-flex align-items-center justify-content-end" id="navbar-collapse">
+
+              {/* Search toggler */}
+              <div className="navbar-nav align-items-center">
+                <div className="nav-item navbar-search-wrapper px-md-0 px-2 mb-0">
+                  <a className="nav-item nav-link search-toggler d-flex align-items-center px-0 gap-2" href="#" onClick={e => e.preventDefault()}>
+                    <i className="icon-base ti tabler-search icon-22px text-body-secondary"></i>
+                    <span className="d-none d-md-inline-block text-body-secondary small">Search…</span>
                   </a>
-                  <ul className="dropdown-menu dropdown-menu-end p-0">
-                    <li className="dropdown-menu-header border-bottom py-3 px-4">
-                      <h6 className="mb-0">Notifications</h6>
+                </div>
+              </div>
+
+              <ul className="navbar-nav flex-row align-items-center ms-md-auto">
+
+                {/* Shortcuts */}
+                <li className="nav-item dropdown-shortcuts navbar-dropdown dropdown me-1">
+                  <a
+                    className="nav-link dropdown-toggle hide-arrow btn btn-icon btn-text-secondary rounded-pill"
+                    href="#"
+                    onClick={e => e.preventDefault()}
+                    data-bs-toggle="dropdown"
+                    data-bs-auto-close="outside"
+                  >
+                    <i className="icon-base ti tabler-layout-grid-add icon-22px text-heading"></i>
+                  </a>
+                  <div className="dropdown-menu dropdown-menu-end p-0" style={{ width: 290 }}>
+                    <div className="dropdown-menu-header border-bottom">
+                      <div className="dropdown-header d-flex align-items-center py-3">
+                        <h6 className="mb-0 me-auto">Quick Links</h6>
+                      </div>
+                    </div>
+                    <div className="p-2">
+                      <div className="row row-bordered overflow-visible g-0">
+                        {[
+                          { icon: 'tabler-layout-dashboard', label: 'Dashboard',    href: '/tutor/dashboard'          },
+                          { icon: 'tabler-book',             label: 'Courses',      href: '/tutor/courses'             },
+                          { icon: 'tabler-users',            label: 'Students',     href: '/tutor/students'            },
+                          { icon: 'tabler-message-question', label: 'Doubts',       href: '/tutor/doubts'              },
+                          { icon: 'tabler-clipboard-list',   label: 'Assignments',  href: '/tutor/assignments'         },
+                          { icon: 'tabler-video',            label: 'Live Classes', href: '/tutor/live-classes/schedule' },
+                        ].map(s => (
+                          <div key={s.label} className="dropdown-shortcuts-item col-6">
+                            <span className="dropdown-shortcuts-icon rounded-circle mb-3">
+                              <i className={`icon-base ti ${s.icon} icon-26px text-heading`}></i>
+                            </span>
+                            <a href={s.href} className="stretched-link small fw-semibold">{s.label}</a>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </li>
+
+                {/* Notifications */}
+                <li className="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-2">
+                  <a
+                    className="nav-link dropdown-toggle hide-arrow btn btn-icon btn-text-secondary rounded-pill"
+                    href="#"
+                    onClick={e => e.preventDefault()}
+                    data-bs-toggle="dropdown"
+                    data-bs-auto-close="outside"
+                  >
+                    <span className="position-relative">
+                      <i className="icon-base ti tabler-bell icon-22px text-heading"></i>
+                      <span className="badge rounded-pill bg-danger badge-dot badge-notifications border"></span>
+                    </span>
+                  </a>
+                  <ul className="dropdown-menu dropdown-menu-end p-0" style={{ width: 300 }}>
+                    <li className="dropdown-menu-header border-bottom">
+                      <div className="dropdown-header d-flex align-items-center py-3">
+                        <h6 className="mb-0 me-auto">Notifications</h6>
+                        <span className="badge bg-label-primary me-2">3 New</span>
+                      </div>
                     </li>
-                    <li><div className="d-grid p-2"><a className="btn btn-primary btn-sm" href="#">View all</a></div></li>
+                    <li className="dropdown-notifications-list scrollable-container" style={{ maxHeight: 280, overflowY: 'auto' }}>
+                      <ul className="list-group list-group-flush">
+                        {[
+                          { init: 'S',  color: 'bg-label-success', title: 'New Doubt',        body: 'Sneha asked a question in CLAT Mains',    time: '10m ago' },
+                          { init: 'A',  color: 'bg-label-info',    title: 'Assignment Due',   body: 'Mock Test #4 deadline is tomorrow',       time: '1h ago'  },
+                          { init: 'R',  color: 'bg-label-warning', title: 'Class Reminder',   body: 'Live class scheduled in 30 minutes',      time: '25m ago' },
+                        ].map(n => (
+                          <li key={n.title} className="list-group-item list-group-item-action dropdown-notifications-item">
+                            <div className="d-flex">
+                              <div className="flex-shrink-0 me-3">
+                                <div className="avatar">
+                                  <span className={`avatar-initial rounded-circle ${n.color}`}>{n.init}</span>
+                                </div>
+                              </div>
+                              <div className="flex-grow-1">
+                                <h6 className="mb-1 small">{n.title}</h6>
+                                <small className="mb-1 d-block text-body">{n.body}</small>
+                                <small className="text-body-secondary">{n.time}</small>
+                              </div>
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+                    </li>
+                    <li className="border-top">
+                      <div className="d-grid p-2">
+                        <a className="btn btn-primary btn-sm" href="#">View all notifications</a>
+                      </div>
+                    </li>
                   </ul>
                 </li>
+
+                {/* User avatar */}
                 <li className="nav-item navbar-dropdown dropdown-user dropdown">
-                  <a className="nav-link dropdown-toggle hide-arrow p-0" href="#" onClick={(e) => e.preventDefault()} data-bs-toggle="dropdown">
+                  <a
+                    className="nav-link dropdown-toggle hide-arrow p-0"
+                    href="#"
+                    onClick={e => e.preventDefault()}
+                    data-bs-toggle="dropdown"
+                  >
                     <div className="avatar avatar-online">
-                      <span className="avatar-initial rounded-circle" style={{ background: '#00CFE8' }}>AK</span>
+                      <span className="avatar-initial rounded-circle" style={{ background: '#00CFE8', color: '#fff' }}>AK</span>
                     </div>
                   </a>
                   <ul className="dropdown-menu dropdown-menu-end">
                     <li>
                       <a className="dropdown-item mt-0" href="#">
-                        <div className="d-flex align-items-center">
-                          <div className="flex-shrink-0 me-2">
-                            <div className="avatar avatar-online">
-                              <span className="avatar-initial rounded-circle" style={{ background: '#00CFE8' }}>AK</span>
-                            </div>
+                        <div className="d-flex align-items-center gap-2">
+                          <div className="avatar avatar-online flex-shrink-0">
+                            <span className="avatar-initial rounded-circle" style={{ background: '#00CFE8', color: '#fff' }}>AK</span>
                           </div>
-                          <div className="flex-grow-1">
+                          <div>
                             <h6 className="mb-0">Anil Kumar</h6>
                             <small className="text-body-secondary">Tutor</small>
                           </div>
@@ -80,13 +170,29 @@ export default function TutorLayout({ children, title, breadcrumb }: {
                     </li>
                   </ul>
                 </li>
+
               </ul>
             </div>
           </nav>
+
+          {/* ── Content ──────────────────────────────────────────────── */}
           <div className="content-wrapper">
-            <div className="container-xxl flex-grow-1 container-p-y">{children}</div>
+            <div className="container-xxl flex-grow-1 container-p-y">
+
+              {(title || crumbs.length > 0) && (
+                <h4 className="py-3 mb-4">
+                  {crumbs.slice(0, -1).map(c => (
+                    <span key={c} className="text-muted fw-light">{c} / </span>
+                  ))}
+                  {title || crumbs[crumbs.length - 1]}
+                </h4>
+              )}
+
+              {children}
+            </div>
             <div className="content-backdrop fade"></div>
           </div>
+
         </div>
       </div>
       <div className="layout-overlay layout-menu-toggle" onClick={closeMenu}></div>
