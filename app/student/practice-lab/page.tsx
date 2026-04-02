@@ -48,7 +48,7 @@ const modules = [
     time: '20–30 min',
     progress: 100,
     color: 'success',
-    href: '#',
+    href: '/student/practice-lab/client-interview',
   },
   {
     icon: 'tabler-clipboard-text',
@@ -63,7 +63,7 @@ const modules = [
     time: '40–60 min',
     progress: 0,
     color: 'warning',
-    href: '#',
+    href: '/student/practice-lab/contract-drafting',
   },
   {
     icon: 'tabler-search',
@@ -90,10 +90,10 @@ const modules = [
     difficulty: 'Advanced',
     diffColor: 'danger',
     xp: 300,
-    time: '35–50 min',
+    time: '20–25 min',
     progress: 10,
     color: 'secondary',
-    href: '#',
+    href: '/student/practice-lab/courtroom-argument',
   },
 ];
 

@@ -7,8 +7,9 @@ const navItems = [
   { href: '/tutor/courses',     icon: 'tabler-book',         label: 'My Courses'       },
   { href: '/tutor/live-classes',icon: 'tabler-video',        label: 'Live Classes'     },
   { href: '/tutor/doubts',      icon: 'tabler-help-circle',  label: 'Student Doubts'   },
-  { href: '/tutor/assignments', icon: 'tabler-notes',        label: 'Assignments'      },
-  { href: '/tutor/students',    icon: 'tabler-chart-bar',    label: 'Student Progress' },
+  { href: '/tutor/assignments',  icon: 'tabler-notes',        label: 'Assignments'      },
+  { href: '/tutor/practice-lab',icon: 'tabler-flask',        label: 'Practice Lab'     },
+  { href: '/tutor/students',     icon: 'tabler-chart-bar',    label: 'Student Progress' },
 ];
 
 export default function TutorSidebar() {
