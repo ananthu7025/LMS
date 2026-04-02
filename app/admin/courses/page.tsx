@@ -149,7 +149,6 @@ export default function AdminCoursesPage() {
         </div>
       </div>
 
-      {/* ── Filters + View Toggle ─────────────────────────────────────── */}
       <div className="card mb-6">
         <div className="card-header d-flex flex-wrap justify-content-between gap-4">
           <div className="card-title mb-0">
@@ -205,11 +204,11 @@ export default function AdminCoursesPage() {
                         className="rounded-2 d-flex align-items-center justify-content-center mb-4 overflow-hidden"
                         style={{ height: 160, position: 'relative', background: `${bg}10` }}
                       >
-                        <img 
-                          src={c.image as string} 
-                          alt={c.title} 
-                          className="w-100 h-100" 
-                          style={{ objectFit: 'cover' }} 
+                        <img
+                          src={c.image as string}
+                          alt={c.title}
+                          className="w-100 h-100"
+                          style={{ objectFit: 'cover' }}
                         />
                         <span
                           className={`badge bg-label-${c.statusColor} position-absolute`}
@@ -313,11 +312,11 @@ export default function AdminCoursesPage() {
                           className="avatar rounded overflow-hidden"
                           style={{ width: 40, height: 40 }}
                         >
-                          <img 
-                            src={c.image as string} 
-                            alt={c.title} 
-                            className="w-100 h-100" 
-                            style={{ objectFit: 'cover' }} 
+                          <img
+                            src={c.image as string}
+                            alt={c.title}
+                            className="w-100 h-100"
+                            style={{ objectFit: 'cover' }}
                           />
                         </div>
                         <div>
