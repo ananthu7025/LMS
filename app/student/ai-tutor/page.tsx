@@ -19,7 +19,34 @@ const quickPrompts = [
   'Right of Private Defence',
 ];
 
-const messages = [
+interface IRACBlock {
+  type: 'irac';
+  issue: string;
+  rule: string;
+  application: { heading?: boolean; text: string }[];
+  conclusion: string;
+}
+
+interface TextBlock {
+  type: 'text';
+  lines: { text: string; heading?: boolean; tip?: boolean }[];
+}
+
+interface TagsBlock {
+  type: 'tags';
+  items: string[];
+}
+
+type ChatBlock = IRACBlock | TextBlock | TagsBlock;
+
+interface ChatMessage {
+  role: 'user' | 'ai';
+  text?: string;
+  time: string;
+  blocks?: ChatBlock[];
+}
+
+const messages: ChatMessage[] = [
   {
     role: 'user',
     text: 'Can you explain the difference between culpable homicide under Section 299 and murder under Section 300 IPC in simple terms?',
