@@ -2,6 +2,7 @@
 import Link from 'next/link';
 
 const menuItems = [
+  { label: 'Home', href: '/student/home', icon: 'ti tabler-smart-home' },
   { label: 'My Learning', href: '/student/learn', icon: 'ti tabler-book' },
   { label: 'Course Catalog', href: '/student/courses', icon: 'ti tabler-search' },
   { label: 'AI Tutor', href: '/student/ai-tutor', icon: 'ti tabler-robot' },

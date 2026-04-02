@@ -121,32 +121,30 @@ export default function AdminCoursesPage() {
   return (
     <AdminLayout title="Courses" breadcrumb="Home / Courses">
 
-      {/* ── Hero Banner ──────────────────────────────────────────────── */}
+      {/* ── Hero Banner ── */}
       <div className="card p-0 mb-6">
-        <div
-          className="card-body d-flex flex-column flex-md-row justify-content-between align-items-center p-6 gap-4"
-          style={{ background: 'linear-gradient(135deg, #7367F020, #9E95F530)', borderRadius: 12 }}
-        >
-          <div className="flex-grow-1">
-            <h4 className="mb-1 text-heading">Manage Your Courses</h4>
-            <p className="mb-4 text-body">
-              Build, publish, and track all law courses for your institute — all in one place.
-            </p>
-            <div className="d-flex align-items-center gap-3" style={{ maxWidth: 480 }}>
+        <div className="card-body d-flex flex-column flex-md-row justify-content-between p-0 pt-6">
+          {/* Left — bulb illustration */}
+          <div className="d-none d-md-flex align-items-end ps-6 pb-0" style={{ minWidth: 90 }}>
+            <img src="/img/illustrations/bulb-light.png" alt="" height={90} style={{ objectFit: 'contain' }} />
+          </div>
+          {/* Center — text + search */}
+          <div className="flex-grow-1 d-flex align-items-center flex-column text-md-center px-6 py-6">
+            <h4 className="mb-2 text-heading lh-lg">
+              Manage Your Courses<br />
+              <span className="text-primary text-nowrap">All in one place.</span>
+            </h4>
+            <p className="mb-4 text-body">Build, publish, and track all law courses for your institute — schedule classes, view progress and more.</p>
+            <div className="d-flex align-items-center gap-3 w-100" style={{ maxWidth: 480 }}>
               <input type="search" placeholder="Search courses..." className="form-control" />
               <a href="/admin/courses/create" className="btn btn-primary text-nowrap">
                 <i className="ti tabler-plus me-1"></i>New Course
               </a>
             </div>
           </div>
-          <div className="d-none d-md-flex align-items-center justify-content-center">
-            <div style={{
-              width: 100, height: 100, borderRadius: '50%',
-              background: 'linear-gradient(135deg, #7367F0, #9E95F5)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-            }}>
-              <i className="ti tabler-books" style={{ fontSize: 48, color: '#fff' }}></i>
-            </div>
+          {/* Right — pencil rocket illustration */}
+          <div className="d-none d-md-flex align-items-end justify-content-end pe-0" style={{ minWidth: 120 }}>
+            <img src="/img/illustrations/pencil-rocket.png" alt="" height={188} style={{ objectFit: 'contain' }} />
           </div>
         </div>
       </div>

@@ -3,13 +3,12 @@ import { usePathname } from 'next/navigation';
 import { useMenu } from '@/hooks/useMenu';
 
 const navItems = [
-  { href: '/tutor/dashboard',             icon: 'tabler-smart-home',   label: 'Dashboard' },
-  { href: '/tutor/courses/1',             icon: 'tabler-book',         label: 'My Courses' },
-  { href: '/tutor/content/upload-video',  icon: 'tabler-upload',       label: 'Upload Content' },
-  { href: '/tutor/live-classes/schedule', icon: 'tabler-video',        label: 'Live Classes' },
-  { href: '/tutor/doubts',                icon: 'tabler-help-circle',  label: 'Student Doubts' },
-  { href: '/tutor/assignments',           icon: 'tabler-notes',        label: 'Assignments' },
-  { href: '/tutor/students',              icon: 'tabler-chart-bar',    label: 'Student Progress' },
+  { href: '/tutor/dashboard',   icon: 'tabler-smart-home',   label: 'Dashboard'        },
+  { href: '/tutor/courses',     icon: 'tabler-book',         label: 'My Courses'       },
+  { href: '/tutor/live-classes',icon: 'tabler-video',        label: 'Live Classes'     },
+  { href: '/tutor/doubts',      icon: 'tabler-help-circle',  label: 'Student Doubts'   },
+  { href: '/tutor/assignments', icon: 'tabler-notes',        label: 'Assignments'      },
+  { href: '/tutor/students',    icon: 'tabler-chart-bar',    label: 'Student Progress' },
 ];
 
 export default function TutorSidebar() {
@@ -45,7 +44,7 @@ export default function TutorSidebar() {
           <span className="menu-header-text">Tutor Portal</span>
         </li>
         {navItems.map(item => {
-          const isActive = pathname === item.href || pathname.startsWith(item.href + '/');
+          const isActive = pathname === item.href || pathname.startsWith(item.href + '/') || pathname.startsWith(item.href);
           return (
             <li key={item.href} className={`menu-item${isActive ? ' active' : ''}`}>
               <a href={item.href} className="menu-link">

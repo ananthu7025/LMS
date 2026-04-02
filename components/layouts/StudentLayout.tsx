@@ -13,7 +13,7 @@ export default function StudentLayout({
     <div className="layout-wrapper layout-navbar-full layout-horizontal layout-without-menu">
       <div className="layout-container">
         <StudentNavbar />
-        <div className="layout-page">
+        <div className="layout-page" style={{ paddingTop: 64 }}>
           <div className="content-wrapper">
             <StudentMenu activePath={activePath} />
             <div className="container-xxl flex-grow-1 container-p-y">

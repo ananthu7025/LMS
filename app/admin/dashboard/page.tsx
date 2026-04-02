@@ -172,8 +172,8 @@ export default function AdminDashboard() {
               </div>
             </div>
             {/* Decorative circles */}
-            <div style={{ position:'absolute', bottom:-60, right:-40, width:200, height:200, borderRadius:'50%', background:'rgba(255,255,255,0.06)' }} />
-            <div style={{ position:'absolute', bottom:-20, right:60,  width:120, height:120, borderRadius:'50%', background:'rgba(255,255,255,0.09)' }} />
+            <div style={{ position: 'absolute', bottom: -60, right: -40, width: 200, height: 200, borderRadius: '50%', background: 'rgba(255,255,255,0.06)' }} />
+            <div style={{ position: 'absolute', bottom: -20, right: 60, width: 120, height: 120, borderRadius: '50%', background: 'rgba(255,255,255,0.09)' }} />
           </div>
         </div>
 
@@ -522,11 +522,12 @@ export default function AdminDashboard() {
         {/* ── Quick Actions ───────────────────────── col-xxl-4 col-md-6 */}
         <div className="col-xxl-4 col-md-6 col-12">
           <div className="card h-100">
-            <div className="card-header">
+            <div className="card-header d-flex justify-content-between align-items-center">
               <div className="card-title mb-0">
                 <h5 className="mb-1">Quick Actions</h5>
                 <p className="card-subtitle">Institute Management</p>
               </div>
+              <img src="/img/illustrations/pencil-rocket.png" alt="" style={{ height: 56, objectFit: 'contain', opacity: 0.9 }} />
             </div>
             <div className="card-body">
               <div className="row g-3">

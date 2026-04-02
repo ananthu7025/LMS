@@ -66,7 +66,7 @@ export default function TutorLayout({ children, title, breadcrumb }: {
                           { icon: 'tabler-users',            label: 'Students',     href: '/tutor/students'            },
                           { icon: 'tabler-message-question', label: 'Doubts',       href: '/tutor/doubts'              },
                           { icon: 'tabler-clipboard-list',   label: 'Assignments',  href: '/tutor/assignments'         },
-                          { icon: 'tabler-video',            label: 'Live Classes', href: '/tutor/live-classes/schedule' },
+                          { icon: 'tabler-video',            label: 'Live Classes', href: '/tutor/live-classes' },
                         ].map(s => (
                           <div key={s.label} className="dropdown-shortcuts-item col-6">
                             <span className="dropdown-shortcuts-icon rounded-circle mb-3">
